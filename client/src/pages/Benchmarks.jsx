@@ -1,28 +1,50 @@
-import React from 'react';
-import { TrendingUp, AlertCircle, CheckCircle2, Wand2, Sparkles, ChevronRight, BarChart3, Globe } from 'lucide-react';
-import { motion } from 'framer-motion';
-import Button from '../components/ui/Button';
-import Card from '../components/ui/Card';
-import { Heading, Text } from '../components/ui/Typography';
-import Badge from '../components/ui/Badge';
+import React from "react";
+import {
+  TrendingUp,
+  AlertCircle,
+  CheckCircle2,
+  Wand2,
+  Sparkles,
+  ChevronRight,
+  BarChart3,
+  Globe,
+} from "lucide-react";
+import { motion } from "framer-motion";
+import Button from "../components/ui/Button";
+import Card from "../components/ui/Card";
+import { Heading, Text } from "../components/ui/Typography";
+import Badge from "../components/ui/Badge";
 
 const Benchmarks = () => {
   return (
-    <div className="min-h-full bg-background grid-pattern p-8 lg:p-16 overflow-y-auto">
+    <div className="h-full min-h-0 bg-background grid-pattern p-8 lg:p-16 overflow-y-auto">
       {/* Header Section */}
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-end mb-16 gap-10">
         <div className="max-w-2xl">
-          <Badge variant="primary" className="mb-6">Global Corpus Analysis</Badge>
-          <Heading level={1} className="mb-6">Market Benchmarks</Heading>
+          <Badge variant="primary" className="mb-6">
+            Global Corpus Analysis
+          </Badge>
+          <Heading level={1} className="mb-6">
+            Market Benchmarks
+          </Heading>
           <Text>
-            Comparing <span className="font-black text-primary border-b-2 border-primary/20 pb-0.5">SaaS Agreement_v4.pdf</span> against the Digital Jurist global corpus to identify outliers and negotiation leverage.
+            Comparing{" "}
+            <span className="font-black text-primary border-b-2 border-primary/20 pb-0.5">
+              SaaS Agreement_v4.pdf
+            </span>{" "}
+            against the Digital Jurist global corpus to identify outliers and
+            negotiation leverage.
           </Text>
         </div>
         <div className="px-8 py-4 bg-white border border-surface-container-high rounded-2xl flex items-center gap-4 shadow-xl shadow-primary/5">
           <div className="w-3 h-3 rounded-full bg-primary animate-pulse shadow-[0_0_10px_rgba(78,96,115,0.5)]"></div>
           <div>
-            <Text variant="label" className="mb-0.5">Live Corpus Status</Text>
-            <div className="text-xl font-black text-on-surface tracking-tighter">14.2k Documents</div>
+            <Text variant="label" className="mb-0.5">
+              Live Corpus Status
+            </Text>
+            <div className="text-xl font-black text-on-surface tracking-tighter">
+              14.2k Documents
+            </div>
           </div>
         </div>
       </div>
@@ -30,7 +52,7 @@ const Benchmarks = () => {
       {/* Bento Grid Dashboard */}
       <div className="max-w-6xl mx-auto grid grid-cols-12 gap-10 mb-16">
         {/* Macro Comparison Card */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
@@ -43,9 +65,21 @@ const Benchmarks = () => {
                 <Heading level={3}>Negotiation Readiness</Heading>
               </div>
               <div className="grid grid-cols-3 gap-12">
-                <StatBlock value="84%" label="Market Alignment" color="text-primary" />
-                <StatBlock value="3" label="Critical Outliers" color="text-red-600" />
-                <StatBlock value="High" label="Leverage Score" color="text-on-surface" />
+                <StatBlock
+                  value="84%"
+                  label="Market Alignment"
+                  color="text-primary"
+                />
+                <StatBlock
+                  value="3"
+                  label="Critical Outliers"
+                  color="text-red-600"
+                />
+                <StatBlock
+                  value="High"
+                  label="Leverage Score"
+                  color="text-on-surface"
+                />
               </div>
             </div>
             {/* Abstract background element */}
@@ -54,7 +88,7 @@ const Benchmarks = () => {
         </motion.div>
 
         {/* AI Quick Insight */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3 }}
@@ -66,54 +100,78 @@ const Benchmarks = () => {
             </div>
             <div className="flex items-center gap-3 mb-6 relative z-10">
               <Sparkles size={20} className="text-white/80" />
-              <span className="font-black text-[10px] uppercase tracking-[0.2em] text-white/70">Jurist Insight</span>
+              <span className="font-black text-[10px] uppercase tracking-[0.2em] text-white/70">
+                Jurist Insight
+              </span>
             </div>
-            <Heading level={4} className="text-white mb-6 relative z-10 leading-relaxed">
-              Your <span className="underline decoration-white/40 underline-offset-8">Liability Cap</span> is significantly higher than 92% of similar deals.
+            <Heading
+              level={4}
+              className="text-white mb-6 relative z-10 leading-relaxed"
+            >
+              Your{" "}
+              <span className="underline decoration-white/40 underline-offset-8">
+                Liability Cap
+              </span>{" "}
+              is significantly higher than 92% of similar deals.
             </Heading>
             <Text className="text-white/80 font-bold relative z-10 text-sm">
-              Focus negotiation here to reduce exposure by <span className="text-white underline decoration-white/60">$2.4M</span>.
+              Focus negotiation here to reduce exposure by{" "}
+              <span className="text-white underline decoration-white/60">
+                $2.4M
+              </span>
+              .
             </Text>
           </Card>
         </motion.div>
 
         {/* Comparison Table Section */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
           className="col-span-12"
         >
-          <Card padding="p-0" className="overflow-hidden border-surface-container-high shadow-xl shadow-primary/5">
+          <Card
+            padding="p-0"
+            className="overflow-hidden border-surface-container-high shadow-xl shadow-primary/5"
+          >
             <table className="w-full text-left border-collapse">
               <thead className="bg-surface-container-low/50">
                 <tr className="text-on-surface-variant">
-                  <th className="p-8 font-black text-[10px] uppercase tracking-[0.2em]">Negotiable Factors</th>
-                  <th className="p-8 font-black text-[10px] uppercase tracking-[0.2em]">Your Term</th>
-                  <th className="p-8 font-black text-[10px] uppercase tracking-[0.2em]">Market Standard</th>
-                  <th className="p-8 font-black text-[10px] uppercase tracking-[0.2em]">Assessment</th>
+                  <th className="p-8 font-black text-[10px] uppercase tracking-[0.2em]">
+                    Negotiable Factors
+                  </th>
+                  <th className="p-8 font-black text-[10px] uppercase tracking-[0.2em]">
+                    Your Term
+                  </th>
+                  <th className="p-8 font-black text-[10px] uppercase tracking-[0.2em]">
+                    Market Standard
+                  </th>
+                  <th className="p-8 font-black text-[10px] uppercase tracking-[0.2em]">
+                    Assessment
+                  </th>
                   <th className="p-8"></th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-surface-container-high">
-                <BenchmarkRow 
-                  factor="Liability Cap" 
+                <BenchmarkRow
+                  factor="Liability Cap"
                   section="Section 12.4 - Indemnification"
                   term="3x Annual Fees"
                   standard="1x Annual Fees"
                   status="danger"
                   assessment="Needs Negotiation"
                 />
-                <BenchmarkRow 
-                  factor="Notice Period" 
+                <BenchmarkRow
+                  factor="Notice Period"
                   section="Section 4.2 - Termination"
                   term="90 Days"
                   standard="30 - 60 Days"
                   status="success"
                   assessment="Favorable"
                 />
-                <BenchmarkRow 
-                  factor="Data Portability" 
+                <BenchmarkRow
+                  factor="Data Portability"
                   section="Section 8.1 - Confidentiality"
                   term="Standard JSON"
                   standard="Standard JSON"
@@ -126,7 +184,7 @@ const Benchmarks = () => {
         </motion.div>
 
         {/* Regional Benchmarks */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
@@ -138,14 +196,22 @@ const Benchmarks = () => {
               <Heading level={4}>Regional Alignment</Heading>
             </div>
             <div className="space-y-10">
-              <ProgressBar label="North America (AMER)" percentage={92} status="High Alignment" />
-              <ProgressBar label="European Union (EMEA)" percentage={64} status="Moderate Gap" />
+              <ProgressBar
+                label="North America (AMER)"
+                percentage={92}
+                status="High Alignment"
+              />
+              <ProgressBar
+                label="European Union (EMEA)"
+                percentage={64}
+                status="Moderate Gap"
+              />
             </div>
           </Card>
         </motion.div>
 
         {/* Strategy Generator */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
@@ -157,9 +223,12 @@ const Benchmarks = () => {
                 <Wand2 size={28} />
               </div>
               <div>
-                <Heading level={4} className="mb-3">Negotiation Playbook</Heading>
+                <Heading level={4} className="mb-3">
+                  Negotiation Playbook
+                </Heading>
                 <Text variant="detail" className="leading-relaxed">
-                  Generate a custom counter-proposal email based on these market discrepancies identified by Digital Jurist.
+                  Generate a custom counter-proposal email based on these market
+                  discrepancies identified by Digital Jurist.
                 </Text>
               </div>
             </div>
@@ -176,25 +245,44 @@ const Benchmarks = () => {
 
 const StatBlock = ({ value, label, color }) => (
   <div className="group/stat">
-    <div className={`text-6xl font-black mb-3 tracking-tighter transition-transform group-hover/stat:scale-105 origin-left ${color}`}>{value}</div>
+    <div
+      className={`text-6xl font-black mb-3 tracking-tighter transition-transform group-hover/stat:scale-105 origin-left ${color}`}
+    >
+      {value}
+    </div>
     <Text variant="label">{label}</Text>
   </div>
 );
 
-const BenchmarkRow = ({ factor, section, term, standard, status, assessment }) => {
+const BenchmarkRow = ({
+  factor,
+  section,
+  term,
+  standard,
+  status,
+  assessment,
+}) => {
   return (
     <tr className="hover:bg-surface-container-low/30 transition-all group">
       <td className="p-8">
-        <div className="font-black text-on-surface text-lg mb-1 group-hover:text-primary transition-colors">{factor}</div>
-        <Text variant="label" className="opacity-60">{section}</Text>
+        <div className="font-black text-on-surface text-lg mb-1 group-hover:text-primary transition-colors">
+          {factor}
+        </div>
+        <Text variant="label" className="opacity-60">
+          {section}
+        </Text>
       </td>
       <td className="p-8 font-black text-on-surface">{term}</td>
       <td className="p-8 text-on-surface-variant font-bold">{standard}</td>
       <td className="p-8">
         <Badge variant={status}>
-          {status === 'danger' ? <AlertCircle size={12} className="mr-1" /> : 
-           status === 'success' ? <TrendingUp size={12} className="mr-1" /> : 
-           <CheckCircle2 size={12} className="mr-1" />}
+          {status === "danger" ? (
+            <AlertCircle size={12} className="mr-1" />
+          ) : status === "success" ? (
+            <TrendingUp size={12} className="mr-1" />
+          ) : (
+            <CheckCircle2 size={12} className="mr-1" />
+          )}
           {assessment}
         </Badge>
       </td>
@@ -210,11 +298,16 @@ const BenchmarkRow = ({ factor, section, term, standard, status, assessment }) =
 const ProgressBar = ({ label, percentage, status }) => (
   <div className="space-y-4">
     <div className="flex justify-between items-center">
-      <Text variant="detail" className="font-black uppercase tracking-widest text-on-surface">{label}</Text>
-      <Badge variant={percentage > 80 ? 'success' : 'neutral'}>{status}</Badge>
+      <Text
+        variant="detail"
+        className="font-black uppercase tracking-widest text-on-surface"
+      >
+        {label}
+      </Text>
+      <Badge variant={percentage > 80 ? "success" : "neutral"}>{status}</Badge>
     </div>
     <div className="w-full bg-surface-container-low h-3 rounded-full overflow-hidden border border-surface-container-high shadow-inner p-0.5">
-      <motion.div 
+      <motion.div
         initial={{ width: 0 }}
         animate={{ width: `${percentage}%` }}
         transition={{ duration: 1.5, ease: "circOut" }}
