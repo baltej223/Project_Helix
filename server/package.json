@@ -12,24 +12,32 @@
     "format": "prettier --write \"src/**/*.ts\""
   },
   "dependencies": {
-    "express": "^4.21.0",
-    "morgan": "^1.10.0",
-    "helmet": "^7.1.0",
+    "@clerk/backend": "^3.2.13",
+    "@google/generative-ai": "^0.24.1",
+    "@pinecone-database/pinecone": "^7.2.0",
+    "axios": "^1.15.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "helmet": "^7.1.0",
+    "mammoth": "^1.12.0",
+    "mongoose": "^9.4.1",
+    "morgan": "^1.10.0",
+    "pdfjs-dist": "^5.6.205",
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/express": "^4.17.21",
-    "@types/morgan": "^1.9.9",
     "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/mongoose": "^5.11.96",
+    "@types/morgan": "^1.9.9",
     "@types/node": "^22.5.0",
-    "typescript": "^5.5.4",
-    "tsx": "^4.19.1",
-    "eslint": "^8.57.0",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
-    "prettier": "^3.3.3"
+    "eslint": "^8.57.0",
+    "prettier": "^3.3.3",
+    "tsx": "^4.19.1",
+    "typescript": "^5.5.4"
   },
   "engines": {
     "node": ">=18.0.0"

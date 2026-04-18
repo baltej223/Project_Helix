@@ -8,6 +8,11 @@ interface Config {
   corsOrigin: string;
   isProduction: boolean;
   isDevelopment: boolean;
+  clerkSecretKey: string;
+  mongodbUri: string;
+  geminiApiKey: string;
+  pineconeApiKey: string;
+  pineconeIndex: string;
 }
 
 const config: Config = {
@@ -16,6 +21,11 @@ const config: Config = {
   corsOrigin: process.env.CORS_ORIGIN || '*',
   isProduction: process.env.NODE_ENV === 'production',
   isDevelopment: process.env.NODE_ENV === 'development',
+  clerkSecretKey: process.env.CLERK_SECRET_KEY || '',
+  mongodbUri: process.env.MONGODB_URI || 'mongodb://localhost:27017/helix',
+  geminiApiKey: process.env.GEMINI_API_KEY || '',
+  pineconeApiKey: process.env.PINECONE_API_KEY || '',
+  pineconeIndex: process.env.PINECONE_INDEX || 'legal-clauses',
 };
 
 export default config;
