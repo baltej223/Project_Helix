@@ -5,6 +5,7 @@ export interface IClause extends Document {
   text: string;
   type: string;
   riskScore: number;
+  finalRiskScore?: number;
   explanation: string;
   impact: string;
   suggestion: string;
@@ -19,6 +20,7 @@ const ClauseSchema: Schema = new Schema({
   text: { type: String, required: true },
   type: { type: String, required: true },
   riskScore: { type: Number, required: true, min: 1, max: 10 },
+  finalRiskScore: { type: Number },
   explanation: { type: String, required: true },
   impact: { type: String, required: true },
   suggestion: { type: String, required: true },

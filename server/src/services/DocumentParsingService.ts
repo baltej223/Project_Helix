@@ -2,10 +2,8 @@ import axios from 'axios';
 import * as pdfjs from 'pdfjs-dist';
 import mammoth from 'mammoth';
 import ParsedContent from '../models/ParsedContent.js';
-import Document from '../models/Document.js';
+import Document, { DocumentStatus } from '../models/Document.js';
 import { AnalysisService } from './AnalysisService.js';
-
-// ... (rest of imports and setup)
 
 export class DocumentParsingService {
   /**
@@ -15,9 +13,20 @@ export class DocumentParsingService {
     try {
       console.log(`Starting parsing for document: ${documentId} (${fileName})`);
       
+      // Update status to parsing
+      await Document.findByIdAndUpdate(documentId, { 
+        status: DocumentStatus.PARSING,
+        currentStep: 'Fetching file from storage',
+        progress: 10 
+      });
+
       // 1. Fetch file from URL
       const response = await axios.get(fileUrl, { responseType: 'arraybuffer' });
       const buffer = Buffer.from(response.data);
+      await Document.findByIdAndUpdate(documentId, { 
+        currentStep: 'Extracting text from document',
+        progress: 20 
+      });
 
       let extractedText = '';
       const extension = fileName.toLowerCase().substring(fileName.lastIndexOf('.'));
@@ -31,6 +40,8 @@ export class DocumentParsingService {
         throw new Error(`Unsupported file type: ${extension}`);
       }
 
+      await Document.findByIdAndUpdate(documentId, { progress: 40 });
+
       // 3. Handle edge cases
       if (!extractedText || extractedText.trim().length === 0) {
         throw new Error('Empty text extracted from document');
@@ -42,6 +53,10 @@ export class DocumentParsingService {
       }
 
       // 4. Store in DB
+      await Document.findByIdAndUpdate(documentId, { 
+        currentStep: 'Storing raw text',
+        progress: 50 
+      });
       await ParsedContent.findOneAndUpdate(
         { documentId },
         { rawText: extractedText },
@@ -49,15 +64,21 @@ export class DocumentParsingService {
       );
 
       // 5. Trigger AI Analysis
-      // We keep the status as 'processing' during analysis
+      await Document.findByIdAndUpdate(documentId, { 
+        status: DocumentStatus.ANALYZING,
+        currentStep: 'Starting AI analysis',
+        progress: 60 
+      });
       await AnalysisService.analyzeDocument(documentId, extractedText);
 
       return extractedText;
     } catch (error: any) {
       console.error(`Parsing failed for document ${documentId}:`, error.message);
       
-      // Update document status to failed
-      await Document.findByIdAndUpdate(documentId, { status: 'failed' });
+      await Document.findByIdAndUpdate(documentId, { 
+        status: DocumentStatus.FAILED,
+        error: error.message 
+      });
       
       throw error;
     }
@@ -65,7 +86,6 @@ export class DocumentParsingService {
 
   private static async parsePdf(buffer: Buffer): Promise<string> {
     try {
-      // Convert buffer to Uint8Array for pdfjs
       const data = new Uint8Array(buffer);
       const loadingTask = pdfjs.getDocument({ data });
       const pdf = await loadingTask.promise;

@@ -2,6 +2,8 @@ import { Router, Response } from 'express';
 import { z } from 'zod';
 import { AuthenticatedRequest } from '../middleware/auth.js';
 import Document, { DocumentStatus } from '../models/Document.js';
+import ParsedContent from '../models/ParsedContent.js';
+import Clause from '../models/Clause.js';
 import { DocumentParsingService } from '../services/DocumentParsingService.js';
 
 const router = Router();
@@ -47,30 +49,149 @@ router.post('/', async (req: AuthenticatedRequest, res: Response) => {
       userId: req.userId,
       fileUrl,
       fileName,
-      status: DocumentStatus.PROCESSING, // Set to processing immediately
+      status: DocumentStatus.UPLOADED,
     });
 
     // 4. Trigger parsing in the background
-    // We don't await this to return the response quickly
+    // We don't await this to return the response immediately
     DocumentParsingService.parseDocument(
       (document._id as any).toString(),
       fileUrl,
       fileName
     ).catch((err) => {
-      console.error(`Background parsing failed for ${document._id}:`, err);
+      console.error(`Background processing failed for ${document._id}:`, err);
     });
 
     return res.status(201).json({
       success: true,
-      message: 'Document received and parsing started',
-      data: document,
+      message: 'Document queued for processing',
+      data: {
+        id: document._id,
+        status: document.status,
+      },
     });
   } catch (error: any) {
-    console.error('Error storing document:', error);
+    console.error('Error queuing document:', error);
     return res.status(500).json({
       success: false,
-      message: 'Internal server error while storing document reference',
+      message: 'Internal server error while queuing document',
     });
+  }
+});
+
+/**
+ * @route GET /documents/:id
+ * @desc Get full document data including analysis results
+ * @access Private
+ */
+router.get('/:id', async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const document = await Document.findById(req.params.id);
+    
+    if (!document) {
+      return res.status(404).json({ success: false, message: 'Document not found' });
+    }
+
+    if (document.userId !== req.userId) {
+      return res.status(403).json({ success: false, message: 'Unauthorized' });
+    }
+
+    return res.json({
+      success: true,
+      data: document,
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Error fetching document' });
+  }
+});
+
+/**
+ * @route GET /documents/:id/status
+ * @desc Check processing status, progress, and current step
+ * @access Private
+ */
+router.get('/:id/status', async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const document = await Document.findById(req.params.id);
+    
+    if (!document) {
+      return res.status(404).json({ success: false, message: 'Document not found' });
+    }
+
+    if (document.userId !== req.userId) {
+      return res.status(403).json({ success: false, message: 'Unauthorized' });
+    }
+
+    return res.json({
+      success: true,
+      data: {
+        id: document._id,
+        status: document.status,
+        progress: document.progress,
+        currentStep: document.currentStep,
+        error: document.error,
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Error fetching status' });
+  }
+});
+
+/**
+ * @route POST /documents/:id/retry
+ * @desc Manually retry failed processing
+ * @access Private
+ */
+router.post('/:id/retry', async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const document = await Document.findById(req.params.id);
+    
+    if (!document) {
+      return res.status(404).json({ success: false, message: 'Document not found' });
+    }
+
+    if (document.userId !== req.userId) {
+      return res.status(403).json({ success: false, message: 'Unauthorized' });
+    }
+
+    // Idempotency: Only allow retry if failed. 
+    // If it's parsing or analyzing, don't allow a duplicate retry.
+    const activeStatuses = [DocumentStatus.PARSING, DocumentStatus.ANALYZING];
+    if (activeStatuses.includes(document.status)) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Document is currently being processed. Please wait.' 
+      });
+    }
+
+    // 1. Clean up partial data from previous attempts
+    await Promise.all([
+      ParsedContent.deleteOne({ documentId: document._id }),
+      Clause.deleteMany({ documentId: document._id }),
+    ]);
+
+    // 2. Reset status and start processing
+    document.status = DocumentStatus.UPLOADED;
+    document.progress = 0;
+    document.currentStep = 'Retrying processing...';
+    document.error = undefined;
+    await document.save();
+
+    // 3. Trigger processing in background
+    DocumentParsingService.parseDocument(
+      document._id.toString(),
+      document.fileUrl,
+      document.fileName
+    ).catch(err => console.error(`Retry failed for ${document._id}:`, err));
+
+    return res.json({
+      success: true,
+      message: 'Retry initiated. Previous partial data has been cleared.',
+      data: { id: document._id, status: document.status },
+    });
+  } catch (error) {
+    console.error('Retry error:', error);
+    return res.status(500).json({ success: false, message: 'Error initiating retry' });
   }
 });
 

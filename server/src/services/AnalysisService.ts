@@ -1,7 +1,8 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import config from '../config/index.js';
-import Document from '../models/Document.js';
+import Document, { DocumentStatus } from '../models/Document.js';
 import { ClauseAnalysisService } from './ClauseAnalysisService.js';
+import { ReportService } from './ReportService.js';
 
 const genAI = new GoogleGenerativeAI(config.geminiApiKey);
 
@@ -26,6 +27,10 @@ export class AnalysisService {
 
       // 2. Call Gemini with retry logic
       const analysisJson = await this.callGeminiWithRetry(preparedText);
+      await Document.findByIdAndUpdate(documentId, { 
+        currentStep: 'Generating high-level summary',
+        progress: 70 
+      });
 
       // 3. Store high-level result in DB
       await Document.findByIdAndUpdate(documentId, {
@@ -35,18 +40,35 @@ export class AnalysisService {
       });
 
       // 4. Trigger granular clause analysis
-      // This is done sequentially here, but could be backgrounded
+      await Document.findByIdAndUpdate(documentId, { 
+        currentStep: 'Performing clause-level analysis',
+        progress: 80 
+      });
       await ClauseAnalysisService.analyzeDocumentClauses(documentId, rawText);
 
-      // 5. Finalize status
-      await Document.findByIdAndUpdate(documentId, { status: 'done' });
+      // 5. Generate final PDF report
+      await Document.findByIdAndUpdate(documentId, { 
+        currentStep: 'Compiling legal report',
+        progress: 90 
+      });
+      await ReportService.generateReport(documentId);
+
+      // 6. Finalize status
+      await Document.findByIdAndUpdate(documentId, { 
+        status: DocumentStatus.COMPLETED,
+        currentStep: 'Analysis complete',
+        progress: 100 
+      });
 
       console.log(`Analysis completed for document: ${documentId}`);
       return analysisJson;
     } catch (error: any) {
       console.error(`AI Analysis failed for document ${documentId}:`, error.message);
       
-      await Document.findByIdAndUpdate(documentId, { status: 'failed' });
+      await Document.findByIdAndUpdate(documentId, { 
+        status: DocumentStatus.FAILED,
+        error: error.message 
+      });
       throw error;
     }
   }
