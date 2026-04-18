@@ -1,320 +1,468 @@
 import React from "react";
 import {
-  TrendingUp,
-  AlertCircle,
-  CheckCircle2,
-  Wand2,
+  Box,
+  Flex,
+  Text,
+  Button,
+  Grid,
+  Badge,
+} from "@chakra-ui/react";
+import {
+  AlertTriangle,
+  FileText,
+  History,
+  LayoutList,
+  WandSparkles,
+  Download,
   Sparkles,
-  ChevronRight,
-  BarChart3,
-  Globe,
+  CheckCircle2,
+  TrendingUp,
 } from "lucide-react";
-import { motion } from "framer-motion";
-import Button from "../components/ui/Button";
-import Card from "../components/ui/Card";
-import { Heading, Text } from "../components/ui/Typography";
-import Badge from "../components/ui/Badge";
 
 const Benchmarks = () => {
+  const rows = [
+    {
+      factor: "Liability Cap",
+      section: "Section 12.4 - Indemnification",
+      yourTerm: "3x Annual Fees",
+      market: "1x Annual Fees",
+      status: "NEEDS NEGOTIATION",
+      tone: "danger",
+    },
+    {
+      factor: "Notice Period",
+      section: "Section 4.2 - Termination",
+      yourTerm: "90 Days",
+      market: "30 - 60 Days",
+      status: "FAVORABLE",
+      tone: "good",
+    },
+    {
+      factor: "Data Portability",
+      section: "Section 8.1 - Confidentiality",
+      yourTerm: "Standard JSON",
+      market: "Standard JSON",
+      status: "ALIGNED",
+      tone: "neutral",
+    },
+    {
+      factor: "IP Rights",
+      section: "Section 5.3 - Ownership",
+      yourTerm: "Restricted Use",
+      market: "Mutual Ownership",
+      status: "NEEDS NEGOTIATION",
+      tone: "danger",
+    },
+  ];
+
+  const sideLinks = [
+    { icon: <FileText size={16} />, label: "DOCUMENT METADATA" },
+    { icon: <LayoutList size={16} />, label: "CLAUSE LIBRARY" },
+    {
+      icon: <Text fontSize="md" fontWeight="900" lineHeight="1">!</Text>,
+      label: "RISK PROFILE",
+      active: true,
+    },
+    { icon: <History size={16} />, label: "HISTORY" },
+    { icon: <Download size={16} />, label: "EXPORT" },
+  ];
+
+  const getStatusStyles = (tone) => {
+    switch (tone) {
+      case "danger":
+        return { bg: "#FEF2F2", color: "#DC2626", border: "#FEE2E2" };
+      case "good":
+        return { bg: "#F0FFF4", color: "#16A34A", border: "#DCFCE7" };
+      default:
+        return { bg: "#F8FAFC", color: "#64748B", border: "#E2E8F0" };
+    }
+  };
+
   return (
-    <div className="h-full min-h-0 bg-background grid-pattern p-8 lg:p-16 overflow-y-auto">
-      {/* Header Section */}
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-end mb-16 gap-10">
-        <div className="max-w-2xl">
-          <Badge variant="primary" className="mb-6">
-            Global Corpus Analysis
-          </Badge>
-          <Heading level={1} className="mb-6">
-            Market Benchmarks
-          </Heading>
-          <Text>
-            Comparing{" "}
-            <span className="font-black text-primary border-b-2 border-primary/20 pb-0.5">
-              SaaS Agreement_v4.pdf
-            </span>{" "}
-            against the Digital Jurist global corpus to identify outliers and
-            negotiation leverage.
-          </Text>
-        </div>
-        <div className="px-8 py-4 bg-white border border-surface-container-high rounded-2xl flex items-center gap-4 shadow-xl shadow-primary/5">
-          <div className="w-3 h-3 rounded-full bg-primary animate-pulse shadow-[0_0_10px_rgba(78,96,115,0.5)]"></div>
-          <div>
-            <Text variant="label" className="mb-0.5">
-              Live Corpus Status
-            </Text>
-            <div className="text-xl font-black text-on-surface tracking-tighter">
-              14.2k Documents
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Bento Grid Dashboard */}
-      <div className="max-w-6xl mx-auto grid grid-cols-12 gap-10 mb-16">
-        {/* Macro Comparison Card */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2 }}
-          className="col-span-12 lg:col-span-8 group"
-        >
-          <Card className="h-full p-10 relative overflow-hidden flex flex-col justify-between shadow-2xl shadow-primary/5 border-primary/5">
-            <div className="relative z-10">
-              <div className="flex items-center gap-3 mb-8">
-                <BarChart3 className="text-primary" size={24} />
-                <Heading level={3}>Negotiation Readiness</Heading>
-              </div>
-              <div className="grid grid-cols-3 gap-12">
-                <StatBlock
-                  value="84%"
-                  label="Market Alignment"
-                  color="text-primary"
-                />
-                <StatBlock
-                  value="3"
-                  label="Critical Outliers"
-                  color="text-red-600"
-                />
-                <StatBlock
-                  value="High"
-                  label="Leverage Score"
-                  color="text-on-surface"
-                />
-              </div>
-            </div>
-            {/* Abstract background element */}
-            <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-linear-to-tl from-primary/10 to-transparent rounded-full blur-3xl group-hover:scale-125 transition-transform duration-700"></div>
-          </Card>
-        </motion.div>
-
-        {/* AI Quick Insight */}
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3 }}
-          className="col-span-12 lg:col-span-4"
-        >
-          <Card className="bg-primary h-full p-10 flex flex-col justify-center text-white shadow-2xl shadow-primary/30 border-none relative overflow-hidden group">
-            <div className="absolute -right-8 -top-8 text-white/10 group-hover:rotate-12 transition-transform duration-500">
-              <Sparkles size={160} />
-            </div>
-            <div className="flex items-center gap-3 mb-6 relative z-10">
-              <Sparkles size={20} className="text-white/80" />
-              <span className="font-black text-[10px] uppercase tracking-[0.2em] text-white/70">
-                Jurist Insight
-              </span>
-            </div>
-            <Heading
-              level={4}
-              className="text-white mb-6 relative z-10 leading-relaxed"
-            >
-              Your{" "}
-              <span className="underline decoration-white/40 underline-offset-8">
-                Liability Cap
-              </span>{" "}
-              is significantly higher than 92% of similar deals.
-            </Heading>
-            <Text className="text-white/80 font-bold relative z-10 text-sm">
-              Focus negotiation here to reduce exposure by{" "}
-              <span className="text-white underline decoration-white/60">
-                $2.4M
-              </span>
-              .
-            </Text>
-          </Card>
-        </motion.div>
-
-        {/* Comparison Table Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="col-span-12"
-        >
-          <Card
-            padding="p-0"
-            className="overflow-hidden border-surface-container-high shadow-xl shadow-primary/5"
-          >
-            <table className="w-full text-left border-collapse">
-              <thead className="bg-surface-container-low/50">
-                <tr className="text-on-surface-variant">
-                  <th className="p-8 font-black text-[10px] uppercase tracking-[0.2em]">
-                    Negotiable Factors
-                  </th>
-                  <th className="p-8 font-black text-[10px] uppercase tracking-[0.2em]">
-                    Your Term
-                  </th>
-                  <th className="p-8 font-black text-[10px] uppercase tracking-[0.2em]">
-                    Market Standard
-                  </th>
-                  <th className="p-8 font-black text-[10px] uppercase tracking-[0.2em]">
-                    Assessment
-                  </th>
-                  <th className="p-8"></th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-surface-container-high">
-                <BenchmarkRow
-                  factor="Liability Cap"
-                  section="Section 12.4 - Indemnification"
-                  term="3x Annual Fees"
-                  standard="1x Annual Fees"
-                  status="danger"
-                  assessment="Needs Negotiation"
-                />
-                <BenchmarkRow
-                  factor="Notice Period"
-                  section="Section 4.2 - Termination"
-                  term="90 Days"
-                  standard="30 - 60 Days"
-                  status="success"
-                  assessment="Favorable"
-                />
-                <BenchmarkRow
-                  factor="Data Portability"
-                  section="Section 8.1 - Confidentiality"
-                  term="Standard JSON"
-                  standard="Standard JSON"
-                  status="neutral"
-                  assessment="Aligned"
-                />
-              </tbody>
-            </table>
-          </Card>
-        </motion.div>
-
-        {/* Regional Benchmarks */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="col-span-12 md:col-span-6"
-        >
-          <Card className="p-10 shadow-xl shadow-primary/5">
-            <div className="flex items-center gap-3 mb-10">
-              <Globe className="text-primary" size={20} />
-              <Heading level={4}>Regional Alignment</Heading>
-            </div>
-            <div className="space-y-10">
-              <ProgressBar
-                label="North America (AMER)"
-                percentage={92}
-                status="High Alignment"
-              />
-              <ProgressBar
-                label="European Union (EMEA)"
-                percentage={64}
-                status="Moderate Gap"
-              />
-            </div>
-          </Card>
-        </motion.div>
-
-        {/* Strategy Generator */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="col-span-12 md:col-span-6"
-        >
-          <Card className="bg-surface-container-low/50 h-full p-10 border-surface-container-high flex flex-col justify-between shadow-inner group">
-            <div className="flex gap-8 items-start">
-              <div className="p-4 bg-white rounded-2xl text-primary shadow-sm group-hover:scale-110 transition-transform">
-                <Wand2 size={28} />
-              </div>
-              <div>
-                <Heading level={4} className="mb-3">
-                  Negotiation Playbook
-                </Heading>
-                <Text variant="detail" className="leading-relaxed">
-                  Generate a custom counter-proposal email based on these market
-                  discrepancies identified by Digital Jurist.
-                </Text>
-              </div>
-            </div>
-            <Button variant="primary" className="w-full py-5 mt-10">
-              <Wand2 size={18} className="mr-3" />
-              Draft Counter-Proposal
-            </Button>
-          </Card>
-        </motion.div>
-      </div>
-    </div>
-  );
-};
-
-const StatBlock = ({ value, label, color }) => (
-  <div className="group/stat">
-    <div
-      className={`text-6xl font-black mb-3 tracking-tighter transition-transform group-hover/stat:scale-105 origin-left ${color}`}
+    <Grid
+      templateColumns={{ base: "1fr", md: "240px 1fr" }}
+      h="100%"
+      bg="#F8FAFC"
     >
-      {value}
-    </div>
-    <Text variant="label">{label}</Text>
-  </div>
-);
-
-const BenchmarkRow = ({
-  factor,
-  section,
-  term,
-  standard,
-  status,
-  assessment,
-}) => {
-  return (
-    <tr className="hover:bg-surface-container-low/30 transition-all group">
-      <td className="p-8">
-        <div className="font-black text-on-surface text-lg mb-1 group-hover:text-primary transition-colors">
-          {factor}
-        </div>
-        <Text variant="label" className="opacity-60">
-          {section}
+      {/* Sidebar */}
+      <Box
+        borderRight="1px solid"
+        borderColor="#E2E8F0"
+        bg="white"
+        p="5"
+        display={{ base: "none", md: "flex" }}
+        flexDirection="column"
+        shadow="1px 0 10px rgba(0,0,0,0.02)"
+        zIndex="10"
+      >
+        <Text fontSize="sm" fontWeight="800" color="#0F1B2D" mb="1" letterSpacing="-0.01em">
+          Case Metadata
         </Text>
-      </td>
-      <td className="p-8 font-black text-on-surface">{term}</td>
-      <td className="p-8 text-on-surface-variant font-bold">{standard}</td>
-      <td className="p-8">
-        <Badge variant={status}>
-          {status === "danger" ? (
-            <AlertCircle size={12} className="mr-1" />
-          ) : status === "success" ? (
-            <TrendingUp size={12} className="mr-1" />
-          ) : (
-            <CheckCircle2 size={12} className="mr-1" />
-          )}
-          {assessment}
-        </Badge>
-      </td>
-      <td className="p-8 text-right">
-        <button className="text-primary opacity-0 group-hover:opacity-100 transition-all font-black text-[10px] uppercase tracking-[0.2em] flex items-center gap-2 ml-auto">
-          Clause Detail <ChevronRight size={16} />
-        </button>
-      </td>
-    </tr>
+        <Text
+          fontSize="10px"
+          fontWeight="700"
+          letterSpacing="0.15em"
+          color="#94A3B8"
+          textTransform="uppercase"
+          mb="6"
+        >
+          AI-generated insight
+        </Text>
+
+        <Flex direction="column" gap="2">
+          {sideLinks.map((item) => (
+            <Button
+              key={item.label}
+              variant="ghost"
+              h="10"
+              px="4"
+              justifyContent="flex-start"
+              gap="3"
+              fontSize="11px"
+              fontWeight="700"
+              letterSpacing="0.1em"
+              color={item.active ? "#2B6CB0" : "#64748B"}
+              bg={item.active ? "linear-gradient(135deg, #EFF6FF, #DBEAFE)" : "transparent"}
+              borderRadius="xl"
+              _hover={{
+                bg: item.active ? "linear-gradient(135deg, #EFF6FF, #DBEAFE)" : "#F1F5F9",
+                color: item.active ? "#2B6CB0" : "#1E293B",
+              }}
+              transition="all 0.2s"
+              shadow={item.active ? "0 2px 8px rgba(49,130,206,0.15)" : "none"}
+            >
+              {item.icon}
+              {item.label}
+            </Button>
+          ))}
+        </Flex>
+
+        <Button
+          mt="auto"
+          bg="linear-gradient(135deg, #2B6CB0, #3182CE)"
+          color="white"
+          h="12"
+          borderRadius="xl"
+          fontSize="xs"
+          fontWeight="800"
+          letterSpacing="0.1em"
+          shadow="0 4px 16px rgba(49, 130, 206, 0.25)"
+          _hover={{
+            shadow: "0 6px 20px rgba(49, 130, 206, 0.35)",
+            transform: "translateY(-1px)",
+          }}
+          transition="all 0.2s"
+        >
+          <Sparkles size={14} style={{ marginRight: '6px' }} />
+          New Analysis
+        </Button>
+      </Box>
+
+      {/* Main Panel */}
+      <Box p={{ base: "5", md: "8", lg: "10" }} overflow="auto">
+        <Box maxW="1200px" mx="auto">
+          {/* Header */}
+          <Flex
+            justify="space-between"
+            align={{ base: "flex-start", md: "center" }}
+            mb="8"
+            flexWrap="wrap"
+            gap="4"
+          >
+            <Box>
+              <Text
+                as="h1"
+                fontSize={{ base: "2xl", md: "3xl" }}
+                fontWeight="900"
+                color="#0F1B2D"
+                letterSpacing="-0.03em"
+              >
+                Market Benchmarks
+              </Text>
+              <Text fontSize="sm" color="#64748B" mt="2" lineHeight="1.6">
+                Comparing{" "}
+                <Text as="span" fontWeight="800" color="#1E293B">
+                  SaaS Agreement_v4.pdf
+                </Text>{" "}
+                against the LegalLens global corpus.
+              </Text>
+            </Box>
+            <Badge
+              bg="#F0FFF4"
+              color="#16A34A"
+              px="4"
+              py="2"
+              borderRadius="full"
+              fontSize="10px"
+              fontWeight="800"
+              letterSpacing="0.1em"
+              border="1px solid"
+              borderColor="#DCFCE7"
+            >
+              LIVE CORPUS: 14.2K DOCS
+            </Badge>
+          </Flex>
+
+          {/* Top Cards */}
+          <Grid templateColumns={{ base: "1fr", md: "1.3fr 1fr" }} gap="6" mb="8">
+            {/* Readiness Card */}
+            <Box
+              bg="white"
+              borderRadius="3xl"
+              p={{ base: "6", md: "8" }}
+              border="1px solid"
+              borderColor="#E2E8F0"
+              shadow="0 2px 8px rgba(0,0,0,0.02), 0 8px 24px rgba(0,0,0,0.04)"
+              position="relative"
+              overflow="hidden"
+            >
+              {/* Decorative gradient strip */}
+              <Box position="absolute" top="0" left="0" right="0" h="4px" bg="linear-gradient(90deg, #2B6CB0, #3182CE, #38B2AC)" />
+
+              <Text fontSize="lg" fontWeight="800" color="#0F1B2D" mb="6">
+                Negotiation Readiness
+              </Text>
+              <Grid templateColumns="repeat(3, 1fr)" gap="4">
+                <Box>
+                  <Text fontSize="3xl" fontWeight="900" color="#2B6CB0" mb="1">
+                    84%
+                  </Text>
+                  <Text fontSize="10px" fontWeight="700" letterSpacing="0.12em" color="#94A3B8">
+                    MARKET ALIGNMENT
+                  </Text>
+                </Box>
+                <Box>
+                  <Text fontSize="3xl" fontWeight="900" color="#F59E0B" mb="1">
+                    3
+                  </Text>
+                  <Text fontSize="10px" fontWeight="700" letterSpacing="0.12em" color="#94A3B8">
+                    CRITICAL OUTLIERS
+                  </Text>
+                </Box>
+                <Box>
+                  <Text fontSize="3xl" fontWeight="900" color="#16A34A" mb="1">
+                    High
+                  </Text>
+                  <Text fontSize="10px" fontWeight="700" letterSpacing="0.12em" color="#94A3B8">
+                    LEVERAGE SCORE
+                  </Text>
+                </Box>
+              </Grid>
+            </Box>
+
+            {/* Recommendation Card */}
+            <Box
+              bg="linear-gradient(135deg, #EFF6FF, #DBEAFE)"
+              borderRadius="3xl"
+              p={{ base: "6", md: "8" }}
+              border="1px solid"
+              borderColor="#BFDBFE"
+              shadow="0 4px 16px rgba(49,130,206,0.1)"
+            >
+              <Flex align="center" gap="2" mb="4">
+                <Sparkles size={16} color="#2B6CB0" />
+                <Text
+                  fontSize="xs"
+                  fontWeight="800"
+                  letterSpacing="0.12em"
+                  color="#2B6CB0"
+                >
+                  JURIST RECOMMENDATION
+                </Text>
+              </Flex>
+              <Text fontSize="sm" color="#1E293B" lineHeight="1.8" mb="3">
+                Your <Text as="span" fontWeight="800">Liability Cap</Text> is significantly higher than
+                92% of similar enterprise deals.
+              </Text>
+              <Text fontSize="sm" color="#475569" lineHeight="1.8">
+                Focus your negotiation here to reduce corporate exposure by an
+                estimated <Text as="span" fontWeight="800" color="#DC2626">$2.4M.</Text>
+              </Text>
+            </Box>
+          </Grid>
+
+          {/* Table */}
+          <Box
+            bg="white"
+            borderRadius="3xl"
+            border="1px solid"
+            borderColor="#E2E8F0"
+            shadow="0 2px 8px rgba(0,0,0,0.02), 0 8px 24px rgba(0,0,0,0.04)"
+            overflow="hidden"
+            mb="8"
+          >
+            <Box overflowX="auto">
+              <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                <thead>
+                  <tr>
+                    {["NEGOTIABLE FACTORS", "YOUR TERM", "MARKET STANDARD", "ASSESSMENT"].map(
+                      (head) => (
+                        <th
+                          key={head}
+                          style={{
+                            padding: "20px 24px",
+                            textAlign: "left",
+                            fontSize: "11px",
+                            fontWeight: "800",
+                            letterSpacing: "0.15em",
+                            color: "#94A3B8",
+                            borderBottom: "1px solid #E2E8F0",
+                            background: "#FAFBFE",
+                          }}
+                        >
+                          {head}
+                        </th>
+                      )
+                    )}
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map((row) => {
+                    const statusStyle = getStatusStyles(row.tone);
+                    return (
+                      <tr
+                        key={row.factor}
+                        style={{
+                          borderBottom: "1px solid #E2E8F0",
+                          transition: "background 0.2s",
+                        }}
+                        onMouseEnter={(e) => (e.currentTarget.style.background = "#FAFBFE")}
+                        onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                      >
+                        <td style={{ padding: "20px 24px" }}>
+                          <Text fontSize="sm" fontWeight="700" color="#0F1B2D">
+                            {row.factor}
+                          </Text>
+                          <Text fontSize="xs" color="#94A3B8" mt="1" fontWeight="500">
+                            {row.section}
+                          </Text>
+                        </td>
+                        <td style={{ padding: "20px 24px" }}>
+                          <Text fontSize="sm" color="#475569" fontWeight="600">{row.yourTerm}</Text>
+                        </td>
+                        <td style={{ padding: "20px 24px" }}>
+                          <Text fontSize="sm" color="#475569" fontWeight="500">{row.market}</Text>
+                        </td>
+                        <td style={{ padding: "20px 24px" }}>
+                          <Badge
+                            bg={statusStyle.bg}
+                            color={statusStyle.color}
+                            border="1px solid"
+                            borderColor={statusStyle.border}
+                            px="3"
+                            py="1.5"
+                            borderRadius="lg"
+                            fontSize="10px"
+                            fontWeight="800"
+                            letterSpacing="0.05em"
+                            display="inline-flex"
+                            alignItems="center"
+                            gap="1.5"
+                          >
+                            {row.tone === "danger" ? <AlertTriangle size={12} /> : row.tone === "good" ? <CheckCircle2 size={12} /> : null}
+                            {row.status}
+                          </Badge>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </Box>
+          </Box>
+
+          {/* Bottom Grid */}
+          <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap="6">
+            {/* Regional Standards */}
+            <Box
+              bg="white"
+              borderRadius="3xl"
+              p={{ base: "6", md: "8" }}
+              border="1px solid"
+              borderColor="#E2E8F0"
+              shadow="0 2px 8px rgba(0,0,0,0.02)"
+            >
+              <Text
+                fontSize="xs"
+                fontWeight="800"
+                letterSpacing="0.15em"
+                color="#94A3B8"
+                mb="6"
+              >
+                REGIONAL STANDARDS
+              </Text>
+
+              <Box mb="6">
+                <Flex justify="space-between" align="center" mb="3">
+                  <Text fontSize="sm" color="#475569" fontWeight="600">North America (AMER)</Text>
+                  <Text fontSize="sm" fontWeight="800" color="#16A34A">High Alignment</Text>
+                </Flex>
+                <Box w="100%" h="2.5" bg="#F1F5F9" borderRadius="full" overflow="hidden">
+                  <Box w="88%" h="100%" bg="linear-gradient(90deg, #22C55E, #16A34A)" borderRadius="full" shadow="0 0 8px rgba(22,163,74,0.4)" />
+                </Box>
+              </Box>
+
+              <Box>
+                <Flex justify="space-between" align="center" mb="3">
+                  <Text fontSize="sm" color="#475569" fontWeight="600">European Union (EMEA)</Text>
+                  <Text fontSize="sm" fontWeight="800" color="#F59E0B">Moderate Gap</Text>
+                </Flex>
+                <Box w="100%" h="2.5" bg="#F1F5F9" borderRadius="full" overflow="hidden">
+                  <Box w="62%" h="100%" bg="linear-gradient(90deg, #FBBF24, #F59E0B)" borderRadius="full" shadow="0 0 8px rgba(245,158,11,0.4)" />
+                </Box>
+              </Box>
+            </Box>
+
+            {/* Negotiation Playbook */}
+            <Box
+              bg="white"
+              borderRadius="3xl"
+              p={{ base: "6", md: "8" }}
+              border="1px solid"
+              borderColor="#E2E8F0"
+              shadow="0 2px 8px rgba(0,0,0,0.02)"
+              display="flex"
+              flexDirection="column"
+            >
+              <Text
+                fontSize="xs"
+                fontWeight="800"
+                letterSpacing="0.15em"
+                color="#94A3B8"
+                mb="4"
+              >
+                NEGOTIATION PLAYBOOK
+              </Text>
+              <Text fontSize="sm" color="#64748B" lineHeight="1.8" mb="6">
+                Generate a custom counter-proposal email based on these market
+                discrepancies, aligned perfectly with current SaaS norms.
+              </Text>
+              <Button
+                mt="auto"
+                bg="linear-gradient(135deg, #0F172A, #1E293B)"
+                color="white"
+                borderRadius="xl"
+                px="6"
+                py="6"
+                fontWeight="700"
+                fontSize="sm"
+                shadow="0 4px 16px rgba(15,23,42,0.3)"
+                _hover={{
+                  transform: "translateY(-2px)",
+                  shadow: "0 8px 24px rgba(15,23,42,0.4)",
+                  bg: "linear-gradient(135deg, #1E293B, #334155)",
+                }}
+                transition="all 0.3s"
+              >
+                <WandSparkles size={16} style={{ marginRight: '8px' }} />
+                Draft Counter-Proposal
+              </Button>
+            </Box>
+          </Grid>
+        </Box>
+      </Box>
+    </Grid>
   );
 };
-
-const ProgressBar = ({ label, percentage, status }) => (
-  <div className="space-y-4">
-    <div className="flex justify-between items-center">
-      <Text
-        variant="detail"
-        className="font-black uppercase tracking-widest text-on-surface"
-      >
-        {label}
-      </Text>
-      <Badge variant={percentage > 80 ? "success" : "neutral"}>{status}</Badge>
-    </div>
-    <div className="w-full bg-surface-container-low h-3 rounded-full overflow-hidden border border-surface-container-high shadow-inner p-0.5">
-      <motion.div
-        initial={{ width: 0 }}
-        animate={{ width: `${percentage}%` }}
-        transition={{ duration: 1.5, ease: "circOut" }}
-        className="bg-linear-to-r from-primary to-primary-dim h-full rounded-full shadow-[0_0_15px_rgba(78,96,115,0.4)]"
-      ></motion.div>
-    </div>
-  </div>
-);
 
 export default Benchmarks;

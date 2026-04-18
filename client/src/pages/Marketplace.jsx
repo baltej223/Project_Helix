@@ -1,315 +1,432 @@
 import React from "react";
 import {
-  Search,
-  Filter,
-  Calendar,
-  Star,
-  Verified,
-  ArrowRight,
-  MessageSquare,
-  Briefcase,
-  Sparkles,
-  MapPin,
-  ExternalLink,
-} from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import Button from "../components/ui/Button";
-import Card from "../components/ui/Card";
-import { Heading, Text } from "../components/ui/Typography";
-import Badge from "../components/ui/Badge";
+  Box,
+  Flex,
+  Text,
+  Button,
+  Grid,
+  SimpleGrid,
+  Badge,
+  Image,
+} from "@chakra-ui/react";
+import { Calendar, Filter, Globe, Search, Settings2, Star, ArrowRight, Sparkles, MapPin, Clock } from "lucide-react";
 
 const Marketplace = () => {
-  return (
-    <div className="h-full min-h-0 bg-background grid-pattern p-8 lg:p-16 overflow-y-auto">
-      {/* Marketplace Header */}
-      <section className="max-w-7xl mx-auto mb-20 flex flex-col md:flex-row md:items-end justify-between gap-12">
-        <div className="max-w-3xl">
-          <Badge variant="primary" className="mb-6">
-            Global Expert Network
-          </Badge>
-          <Heading level={1} className="mb-6 leading-tight">
-            Legal Marketplace
-          </Heading>
-          <Text className="text-xl">
-            Connect with specialized legal consultants for verified analysis and
-            direct advisory sessions. Architecting trust through verified
-            expertise.
-          </Text>
-        </div>
-        <div className="flex gap-4">
-          <div className="px-8 py-5 bg-white border border-surface-container-high rounded-2xl flex items-center gap-4 shadow-xl shadow-primary/5">
-            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
-              <Verified size={24} />
-            </div>
-            <div>
-              <Text variant="label" className="mb-0.5">
-                Expert Status
-              </Text>
-              <div className="text-lg font-black text-on-surface tracking-tighter">
-                Verified Pros Only
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+  const lawyers = [
+    {
+      name: "Eleanor Vance, LL.M.",
+      role: "Corporate M&A & Intellectual Property",
+      rating: "4.9",
+      reviews: "124",
+      price: "$180",
+      location: "New York, NY",
+      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=300&auto=format&fit=crop",
+    },
+    {
+      name: "Marcus Kaine",
+      role: "Digital Privacy & Data Compliance",
+      rating: "4.7",
+      reviews: "82",
+      price: "$120",
+      location: "San Francisco, CA",
+      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=300&auto=format&fit=crop",
+    },
+    {
+      name: "Samuel Whitlock",
+      role: "Tax Litigation & Asset Protection",
+      rating: "5.0",
+      reviews: "215",
+      price: "$250",
+      location: "Chicago, IL",
+      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=300&auto=format&fit=crop",
+    },
+    {
+      name: "Linda Amara",
+      role: "Environmental Regulatory Law",
+      rating: "4.8",
+      reviews: "54",
+      price: "$165",
+      location: "Washington, DC",
+      image: "https://images.unsplash.com/photo-1573497019418-b400bb3ab074?q=80&w=300&auto=format&fit=crop",
+    },
+    {
+      name: "Robert Jensen",
+      role: "Commercial Real Estate & Leasing",
+      rating: "4.6",
+      reviews: "91",
+      price: "$140",
+      location: "Dallas, TX",
+      image: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?q=80&w=300&auto=format&fit=crop",
+    },
+    {
+      name: "Sienna Chang",
+      role: "Contractual Disputes & Risk Mitigation",
+      rating: "4.9",
+      reviews: "112",
+      price: "$175",
+      location: "Boston, MA",
+      image: "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?q=80&w=300&auto=format&fit=crop",
+    },
+  ];
 
-      {/* Filter Section */}
-      <section className="max-w-7xl mx-auto mb-16 flex flex-wrap items-center gap-8">
-        <div className="flex-1 min-w-[400px]">
-          <div className="relative group">
-            <Search
-              className="absolute left-6 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary transition-all group-focus-within:scale-110"
-              size={24}
+  return (
+    <Box minH="100%" bg="#F8FAFC" overflow="auto" p={{ base: "5", md: "8", lg: "10" }}>
+      <Box maxW="1400px" mx="auto">
+        {/* Header */}
+        <Flex
+          justify="space-between" align={{ base: "flex-start", md: "center" }}
+          mb="8" flexWrap="wrap" gap="4"
+        >
+          <Box>
+            <Text
+              as="h1"
+              fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
+              fontWeight="900" color="#0F1B2D"
+              letterSpacing="-0.03em" lineHeight="1.1"
+            >
+              Legal Marketplace
+            </Text>
+            <Text fontSize="md" color="#64748B" mt="2" lineHeight="1.7" maxW="520px">
+              Connect with specialized legal consultants for verified analysis
+              and transparent pricing.
+            </Text>
+          </Box>
+          <Flex align="center" gap="2" bg="#F0FFF4" border="1px solid" borderColor="#C6F6D5" px="4" py="2" borderRadius="full">
+            <Box w="2" h="2" borderRadius="full" bg="#16A34A" />
+            <Text fontSize="xs" fontWeight="700" letterSpacing="0.1em" color="#16A34A">
+              VERIFIED NETWORK
+            </Text>
+          </Flex>
+        </Flex>
+
+        {/* Filters */}
+        <Flex
+          gap="3" mb="8" flexWrap="wrap" align="center"
+          bg="white" p="4" borderRadius="2xl"
+          border="1px solid" borderColor="#E2E8F0"
+          shadow="0 1px 3px rgba(0,0,0,0.03)"
+        >
+          <Flex
+            flex="1" minW="240px" maxW="420px"
+            bg="#F8FAFC" border="1px solid" borderColor="#E2E8F0"
+            borderRadius="xl" px="4" h="12" align="center" gap="3"
+            transition="all 0.2s"
+            _focusWithin={{ borderColor: "#93C5FD", shadow: "0 0 0 3px rgba(49,130,206,0.08)" }}
+          >
+            <Search size={16} color="#94A3B8" />
+            <Box
+              as="input" placeholder="Search by name, firm, or keyword..."
+              type="text" flex="1" border="none" outline="none"
+              bg="transparent" fontSize="sm" color="#1E293B"
+              _placeholder={{ color: "#CBD5E0" }}
             />
-            <input
-              className="w-full pl-16 pr-8 py-6 bg-white border-2 border-surface-container-high rounded-[2rem] focus:ring-8 focus:ring-primary/5 focus:border-primary/40 outline-none text-on-surface transition-all placeholder:text-on-surface-variant/40 font-bold text-lg shadow-xl shadow-primary/5"
-              placeholder="Search by name, firm, or specialty..."
-              type="text"
-            />
-          </div>
-        </div>
-        <div className="flex items-center gap-4">
-          <FilterButton icon={<Filter size={20} />} label="Specialization" />
-          <FilterButton icon={<Calendar size={20} />} label="Availability" />
-          <Button variant="primary" className="px-10 py-6 rounded-[2rem]">
+          </Flex>
+          <Button
+            variant="outline" borderColor="#E2E8F0" color="#475569"
+            borderRadius="xl" fontSize="sm" fontWeight="600" h="12" px="5"
+            _hover={{ bg: "#F8FAFC", borderColor: "#93C5FD", color: "#2B6CB0" }}
+            transition="all 0.2s"
+          >
+            <Filter size={14} /> Specialization
+          </Button>
+          <Button
+            variant="outline" borderColor="#E2E8F0" color="#475569"
+            borderRadius="xl" fontSize="sm" fontWeight="600" h="12" px="5"
+            _hover={{ bg: "#F8FAFC", borderColor: "#93C5FD", color: "#2B6CB0" }}
+            transition="all 0.2s"
+          >
+            <Calendar size={14} /> Availability
+          </Button>
+          <Button
+            bg="linear-gradient(135deg, #2B6CB0, #3182CE)"
+            color="white" borderRadius="xl" fontSize="sm" fontWeight="700"
+            h="12" px="7"
+            shadow="0 2px 8px rgba(49,130,206,0.25)"
+            _hover={{
+              shadow: "0 6px 20px rgba(49,130,206,0.35)",
+              transform: "translateY(-1px)",
+            }}
+            _active={{ transform: "translateY(0)" }}
+            transition="all 0.2s"
+          >
             Apply Filters
           </Button>
-        </div>
-      </section>
+        </Flex>
 
-      {/* Profile Card Grid */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-        <LawyerCard
-          name="Eleanor Vance, LL.M."
-          title="Corporate M&A & Intellectual Property"
-          rating="4.9"
-          reviews="124"
-          price="180"
-          status="online"
-          location="London, UK"
-          image="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=300&auto=format&fit=crop"
-        />
-        <LawyerCard
-          name="Marcus Kaine"
-          title="Digital Privacy & Data Compliance"
-          rating="4.7"
-          reviews="82"
-          price="120"
-          status="away"
-          location="New York, USA"
-          image="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=300&auto=format&fit=crop"
-        />
-        <LawyerCard
-          name="Samuel Whitlock"
-          title="Tax Litigation & Asset Protection"
-          rating="5.0"
-          reviews="215"
-          price="250"
-          status="online"
-          location="Singapore"
-          image="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=300&auto=format&fit=crop"
-        />
-      </div>
+        {/* Lawyer Grid */}
+        <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap="6" mb="10">
+          {lawyers.map((lawyer, index) => (
+            <Box
+              key={lawyer.name}
+              bg="white" borderRadius="2xl" overflow="hidden"
+              border="1px solid" borderColor="#E2E8F0"
+              shadow="0 1px 3px rgba(0,0,0,0.03)"
+              transition="all 0.4s cubic-bezier(0.4, 0, 0.2, 1)"
+              _hover={{
+                transform: "translateY(-8px)",
+                shadow: "0 20px 40px rgba(0,0,0,0.08), 0 0 0 1px rgba(49,130,206,0.06)",
+                borderColor: "#BEE3F8",
+              }}
+              role="group" cursor="pointer"
+            >
+              {/* Gradient accent */}
+              <Box
+                h="4px"
+                bg="linear-gradient(90deg, #2B6CB0, #3182CE, #38B2AC)"
+                opacity="0.7" transition="opacity 0.3s"
+                _groupHover={{ opacity: 1 }}
+              />
 
-      {/* Featured Specialist */}
-      <section className="max-w-7xl mx-auto mt-32">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-linear-to-br from-white to-surface-container-low/50 rounded-[3rem] p-16 lg:p-20 flex flex-col lg:flex-row gap-20 items-center border border-surface-container-high shadow-2xl shadow-primary/5 overflow-hidden relative"
+              <Box p="6">
+                {/* Profile row */}
+                <Flex gap="4" mb="5">
+                  <Box position="relative" flexShrink="0">
+                    <Image
+                      src={lawyer.image} alt={lawyer.name}
+                      w="16" h="16" borderRadius="2xl"
+                      objectFit="cover" border="3px solid" borderColor="#F1F5F9"
+                      shadow="0 4px 12px rgba(0,0,0,0.08)"
+                    />
+                    <Box
+                      position="absolute" bottom="-1px" right="-1px"
+                      w="4" h="4" borderRadius="full"
+                      bg={index === 4 ? "#F59E0B" : "#16A34A"}
+                      border="2.5px solid white"
+                      shadow={`0 0 8px ${index === 4 ? "rgba(245,158,11,0.4)" : "rgba(22,163,74,0.4)"}`}
+                    />
+                  </Box>
+                  <Box flex="1" minW="0">
+                    <Text fontSize="md" fontWeight="800" color="#0F1B2D" mb="0.5" lineHeight="1.3"
+                      overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap"
+                    >
+                      {lawyer.name}
+                    </Text>
+                    <Text fontSize="sm" color="#64748B" lineHeight="1.5" mb="2">
+                      {lawyer.role}
+                    </Text>
+                    <Flex gap="3" align="center" flexWrap="wrap">
+                      <Flex align="center" gap="1">
+                        <Star size={13} fill="#FBBF24" color="#FBBF24" />
+                        <Text fontSize="sm" fontWeight="800" color="#1E293B">{lawyer.rating}</Text>
+                        <Text fontSize="xs" color="#94A3B8">({lawyer.reviews})</Text>
+                      </Flex>
+                      <Flex align="center" gap="1" color="#94A3B8">
+                        <MapPin size={11} />
+                        <Text fontSize="xs">{lawyer.location}</Text>
+                      </Flex>
+                    </Flex>
+                  </Box>
+                </Flex>
+
+                {/* Bottom */}
+                <Box pt="5" borderTop="1px solid" borderColor="#F1F5F9">
+                  <Flex justify="space-between" align="center">
+                    <Box>
+                      <Text fontSize="10px" fontWeight="700" color="#94A3B8" letterSpacing="0.12em" mb="1">
+                        CONSULTATION
+                      </Text>
+                      <Flex align="baseline" gap="1">
+                        <Text fontSize="xl" fontWeight="900" color="#0F1B2D">{lawyer.price}</Text>
+                        <Text fontSize="xs" color="#94A3B8" fontWeight="500">/ 30 min</Text>
+                      </Flex>
+                    </Box>
+                    <Button
+                      bg="linear-gradient(135deg, #2B6CB0, #3182CE)"
+                      color="white" borderRadius="xl" fontSize="sm" fontWeight="700"
+                      px="6" py="5"
+                      shadow="0 2px 8px rgba(49,130,206,0.2)"
+                      _hover={{
+                        shadow: "0 6px 20px rgba(49,130,206,0.3)",
+                        transform: "translateY(-2px)",
+                      }}
+                      _active={{ transform: "translateY(0)" }}
+                      transition="all 0.3s"
+                    >
+                      Book Now
+                    </Button>
+                  </Flex>
+                </Box>
+              </Box>
+            </Box>
+          ))}
+        </SimpleGrid>
+
+        {/* AI Recommended Section */}
+        <Box
+          bg="white" borderRadius="3xl" overflow="hidden"
+          border="1px solid" borderColor="#E2E8F0"
+          shadow="0 1px 3px rgba(0,0,0,0.03), 0 8px 24px rgba(0,0,0,0.04)"
+          mb="10" position="relative"
         >
-          <div className="absolute right-0 top-0 w-1/2 h-full bg-linear-to-l from-primary/5 to-transparent pointer-events-none"></div>
+          {/* Top accent */}
+          <Box h="4px" bg="linear-gradient(90deg, #2B6CB0, #3182CE, #38B2AC, #16A34A)" />
 
-          <div className="lg:w-1/2 relative z-10">
-            <div className="inline-flex items-center gap-3 px-6 py-2 bg-primary/10 text-primary text-[10px] font-black uppercase tracking-[0.3em] rounded-full mb-10 border border-primary/20">
-              <Sparkles size={16} />
-              AI-Matched Expert
-            </div>
-            <Heading level={2} className="mb-10 leading-tight">
-              Recommended for your recent Analysis
-            </Heading>
-            <Text className="text-xl mb-12 font-medium leading-relaxed">
-              Based on your{" "}
-              <span className="text-primary font-black">
-                Master_Service_Agreement_v4.pdf
-              </span>
-              , Dr. Aris Thorne specializes in the cross-border regulatory
-              hurdles identified.
-            </Text>
-            <div className="flex items-center gap-10">
-              <Button size="lg" className="px-12">
-                Priority Sync
-              </Button>
-              <button className="text-[10px] font-black uppercase tracking-[0.3em] text-on-surface-variant hover:text-primary transition-all border-b-2 border-primary/20 hover:border-primary pb-2 flex items-center gap-2">
-                Deep Profile <ArrowRight size={14} />
-              </button>
-            </div>
-          </div>
+          <Grid templateColumns={{ base: "1fr", lg: "1.4fr 1fr" }}>
+            <Box p={{ base: "8", md: "10", lg: "12" }}>
+              <Flex align="center" gap="2" mb="5">
+                <Flex
+                  w="7" h="7" borderRadius="lg"
+                  bg="linear-gradient(135deg, #EBF8FF, #DBEAFE)"
+                  color="#2B6CB0" align="center" justify="center"
+                >
+                  <Sparkles size={14} />
+                </Flex>
+                <Text fontSize="xs" fontWeight="800" letterSpacing="0.12em" color="#2B6CB0">
+                  AI-MATCHED SPECIALIST
+                </Text>
+              </Flex>
 
-          <div className="lg:w-1/2 w-full grid grid-cols-2 gap-8 relative z-10">
-            <MetricCard
-              icon={<Verified className="text-primary" />}
-              label="Tier 1 Expert"
-              value="98%"
-              sub="Relevance Match"
-            />
-            <MetricCard
-              icon={<Calendar className="text-primary" />}
-              label="Response"
-              value="< 2hrs"
-              sub="Turnaround"
-            />
-            <div className="bg-white/80 backdrop-blur-xl p-10 rounded-[2.5rem] shadow-xl shadow-primary/5 border border-surface-container-high col-span-2 flex items-center gap-8 group cursor-pointer hover:border-primary/20 transition-all">
-              <div className="relative">
-                <img
+              <Text
+                as="h2"
+                fontSize={{ base: "xl", md: "2xl", lg: "3xl" }}
+                fontWeight="900" color="#0F1B2D"
+                letterSpacing="-0.03em" lineHeight="1.15" mb="4"
+              >
+                Recommended for your
+                <br />
+                recent M&amp;A Analysis
+              </Text>
+              <Text fontSize="md" color="#64748B" lineHeight="1.85" mb="8" maxW="480px">
+                Based on your uploaded documents, Dr. Aris Thorne specializes in
+                the specific cross-border regulatory hurdles identified in your
+                last risk profile.
+              </Text>
+              <Flex gap="4" flexWrap="wrap">
+                <Button
+                  bg="linear-gradient(135deg, #2B6CB0, #3182CE)"
+                  color="white" borderRadius="xl" fontWeight="700" fontSize="sm"
+                  px="8" py="6"
+                  shadow="0 4px 16px rgba(49,130,206,0.25)"
+                  _hover={{
+                    shadow: "0 8px 25px rgba(49,130,206,0.35)",
+                    transform: "translateY(-2px)",
+                  }}
+                  _active={{ transform: "translateY(0)" }}
+                  transition="all 0.3s"
+                >
+                  Schedule Priority Sync
+                  <ArrowRight size={15} />
+                </Button>
+                <Button
+                  variant="ghost" color="#2B6CB0" fontWeight="700" fontSize="sm"
+                  borderRadius="xl" px="6" py="6"
+                  _hover={{ bg: "#EFF6FF" }}
+                  transition="all 0.2s"
+                >
+                  View Deep Profile
+                </Button>
+              </Flex>
+            </Box>
+
+            <Box
+              bg="linear-gradient(135deg, #F8FAFC, #F1F5F9)"
+              p={{ base: "8", md: "10" }}
+              borderLeft={{ base: "none", lg: "1px solid" }}
+              borderTop={{ base: "1px solid", lg: "none" }}
+              borderColor="#E2E8F0"
+              display="flex" flexDirection="column" justifyContent="center"
+            >
+              <SimpleGrid columns={2} gap="4" mb="6">
+                {[
+                  { label: "TIER 1 EXPERT", value: "98%", sub: "Relevance Match", color: "#2B6CB0" },
+                  { label: "RESPONSE TIME", value: "< 2hrs", sub: "Avg. turnaround", color: "#0D9488" },
+                ].map((stat) => (
+                  <Box
+                    key={stat.label}
+                    bg="white" borderRadius="2xl" p="5"
+                    border="1px solid" borderColor="#E2E8F0"
+                    textAlign="center"
+                    shadow="0 1px 3px rgba(0,0,0,0.03)"
+                    transition="all 0.3s"
+                    _hover={{ shadow: "0 4px 16px rgba(0,0,0,0.06)", transform: "translateY(-2px)" }}
+                  >
+                    <Text fontSize="9px" fontWeight="800" color="#94A3B8" letterSpacing="0.15em" mb="2">
+                      {stat.label}
+                    </Text>
+                    <Text fontSize="2xl" fontWeight="900" color={stat.color} mb="1">
+                      {stat.value}
+                    </Text>
+                    <Text fontSize="xs" color="#94A3B8">{stat.sub}</Text>
+                  </Box>
+                ))}
+              </SimpleGrid>
+
+              <Flex
+                bg="white" borderRadius="2xl" p="5"
+                border="1px solid" borderColor="#E2E8F0"
+                align="center" gap="4"
+                shadow="0 1px 3px rgba(0,0,0,0.03)"
+              >
+                <Image
                   src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=200&auto=format&fit=crop"
                   alt="Dr. Aris Thorne"
-                  className="w-24 h-24 rounded-[2rem] object-cover border-4 border-primary/5 group-hover:scale-105 transition-transform"
+                  w="14" h="14" borderRadius="2xl" objectFit="cover"
+                  border="3px solid" borderColor="#F1F5F9"
+                  shadow="0 4px 12px rgba(0,0,0,0.08)"
                 />
-                <div className="absolute -right-2 -bottom-2 w-8 h-8 bg-primary rounded-xl flex items-center justify-center text-white border-4 border-white">
-                  <Verified size={14} />
-                </div>
-              </div>
-              <div>
-                <div className="text-2xl font-black text-on-surface mb-1">
-                  Dr. Aris Thorne
-                </div>
-                <div className="text-sm font-bold text-on-surface-variant flex items-center gap-2">
-                  Senior Counsel, Global Regulations
-                  <div className="w-1 h-1 rounded-full bg-surface-container-high"></div>
-                  <span className="text-primary">Stanford Law</span>
-                </div>
-              </div>
-              <ArrowRight
-                className="ml-auto text-primary/20 group-hover:text-primary group-hover:translate-x-2 transition-all"
-                size={24}
-              />
-            </div>
-          </div>
-        </motion.div>
-      </section>
-    </div>
+                <Box>
+                  <Text fontSize="md" fontWeight="800" color="#0F1B2D">Dr. Aris Thorne</Text>
+                  <Text fontSize="sm" color="#64748B">Senior Counsel, Global Regulations</Text>
+                  <Flex align="center" gap="1" mt="1">
+                    <Star size={12} fill="#FBBF24" color="#FBBF24" />
+                    <Text fontSize="sm" fontWeight="700" color="#1E293B">4.9</Text>
+                    <Text fontSize="xs" color="#94A3B8">· 340 cases</Text>
+                  </Flex>
+                </Box>
+              </Flex>
+            </Box>
+          </Grid>
+        </Box>
+
+        {/* Footer */}
+        <Box
+          bg="white" borderRadius="3xl"
+          border="1px solid" borderColor="#E2E8F0"
+          shadow="0 1px 3px rgba(0,0,0,0.03)"
+          p={{ base: "8", md: "10" }}
+        >
+          <Grid
+            templateColumns={{ base: "1fr", md: "2.5fr 1fr 1fr 1fr" }}
+            gap={{ base: "8", md: "12" }}
+          >
+            <Box>
+              <Text fontSize="lg" fontWeight="900" color="#0F1B2D" mb="3" letterSpacing="-0.02em">
+                LegalLens AI
+              </Text>
+              <Text fontSize="sm" color="#64748B" lineHeight="1.85" mb="4" maxW="300px">
+                The next-generation legal workspace. Bridging the gap between
+                AI-powered data and human legal intuition.
+              </Text>
+              <Text fontSize="xs" color="#CBD5E0">
+                © 2024 LegalLens Technologies. All rights reserved.
+              </Text>
+            </Box>
+            {[
+              { title: "PLATFORM", links: ["Analyzer", "Marketplace", "API Docs"] },
+              { title: "LAWYERS", links: ["Join Network", "Provider Portal", "Best Practices"] },
+              { title: "LEGAL", links: ["Privacy Policy", "Compliance", "Terms of Service"] },
+            ].map((col) => (
+              <Box key={col.title}>
+                <Text fontSize="xs" fontWeight="800" letterSpacing="0.15em" color="#94A3B8" mb="4">
+                  {col.title}
+                </Text>
+                <Flex direction="column" gap="3">
+                  {col.links.map((link) => (
+                    <Text
+                      key={link} as="a" href="#" fontSize="sm" color="#64748B" fontWeight="500"
+                      _hover={{ color: "#2B6CB0" }} transition="color 0.2s"
+                    >
+                      {link}
+                    </Text>
+                  ))}
+                </Flex>
+              </Box>
+            ))}
+          </Grid>
+        </Box>
+      </Box>
+    </Box>
   );
 };
-
-const FilterButton = ({ icon, label }) => (
-  <button className="flex items-center gap-4 px-8 py-5 bg-white hover:bg-surface-container-low rounded-[1.5rem] transition-all border-2 border-surface-container-high hover:border-primary/20 shadow-sm group">
-    <span className="text-on-surface-variant group-hover:text-primary transition-colors">
-      {icon}
-    </span>
-    <span className="text-sm font-black text-on-surface uppercase tracking-widest">
-      {label}
-    </span>
-  </button>
-);
-
-const LawyerCard = ({
-  name,
-  title,
-  rating,
-  reviews,
-  price,
-  status,
-  image,
-  location,
-}) => (
-  <motion.div
-    whileHover={{ y: -12 }}
-    className="group relative bg-white rounded-[3rem] overflow-hidden flex flex-col shadow-2xl shadow-primary/5 border border-surface-container-high transition-all duration-500"
-  >
-    <div className="h-3 bg-linear-to-r from-primary to-primary-dim opacity-80 group-hover:opacity-100 transition-opacity"></div>
-    <div className="p-12 flex flex-col h-full">
-      <div className="flex items-start justify-between mb-10">
-        <div className="relative">
-          <div className="absolute -inset-4 bg-primary/5 rounded-[2.5rem] blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-          <img
-            src={image}
-            alt={name}
-            className="w-28 h-28 rounded-[2rem] object-cover ring-8 ring-surface-container-low transition-all group-hover:ring-primary/10 relative z-10"
-          />
-          <div
-            className={`absolute -right-1 -bottom-1 w-6 h-6 border-4 border-white rounded-full relative z-20 ${status === "online" ? "bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" : "bg-amber-400"}`}
-          ></div>
-        </div>
-        <div className="text-right">
-          <div className="flex items-center justify-end gap-2 text-primary">
-            <Star size={20} fill="currentColor" />
-            <span className="font-black text-2xl tracking-tighter">
-              {rating}
-            </span>
-          </div>
-          <div className="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant font-black mt-2">
-            {reviews} Reviews
-          </div>
-        </div>
-      </div>
-
-      <Heading
-        level={3}
-        className="mb-2 leading-tight group-hover:text-primary transition-colors"
-      >
-        {name}
-      </Heading>
-      <Text variant="detail" className="font-bold mb-4 opacity-80">
-        {title}
-      </Text>
-      <div className="flex items-center gap-2 mb-10 text-on-surface-variant opacity-60">
-        <MapPin size={14} />
-        <span className="text-[10px] font-black uppercase tracking-widest">
-          {location}
-        </span>
-      </div>
-
-      <div className="mt-auto pt-10 border-t border-surface-container-high flex items-center justify-between">
-        <div>
-          <Text variant="label" className="mb-1 opacity-50">
-            Consultation
-          </Text>
-          <div className="flex items-baseline gap-1.5">
-            <span className="text-3xl font-black text-on-surface tracking-tighter">
-              ${price}
-            </span>
-            <span className="text-[10px] font-black text-on-surface-variant uppercase tracking-[0.2em]">
-              / session
-            </span>
-          </div>
-        </div>
-        <button className="w-16 h-16 bg-surface-container-low text-primary rounded-[1.5rem] hover:bg-primary hover:text-white hover:shadow-2xl hover:shadow-primary/40 transition-all active:scale-95 flex items-center justify-center group/btn border border-surface-container-high/50">
-          <ArrowRight
-            size={24}
-            className="transition-transform group-hover/btn:translate-x-1"
-          />
-        </button>
-      </div>
-    </div>
-  </motion.div>
-);
-
-const MetricCard = ({ icon, label, value, sub }) => (
-  <Card
-    padding="p-8"
-    className="shadow-xl shadow-primary/5 flex flex-col gap-6 group hover:border-primary/20 transition-all"
-  >
-    <div className="flex items-center gap-4">
-      <div className="p-3 bg-primary/5 rounded-2xl text-primary transition-colors group-hover:bg-primary group-hover:text-white">
-        {icon}
-      </div>
-      <Text
-        variant="label"
-        className="group-hover:text-primary transition-colors"
-      >
-        {label}
-      </Text>
-    </div>
-    <div>
-      <div className="text-4xl font-black text-on-surface tracking-tighter mb-1">
-        {value}
-      </div>
-      <Text variant="detail" className="opacity-60">
-        {sub}
-      </Text>
-    </div>
-  </Card>
-);
 
 export default Marketplace;
