@@ -12,9 +12,9 @@ function App() {
     <Router>
       <div className="flex h-screen bg-background text-on-surface antialiased overflow-hidden">
         <Sidebar />
-        <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="flex-1 min-h-0 flex flex-col overflow-hidden">
           <Header />
-          <main className="flex-1 overflow-hidden">
+          <main className="flex-1 min-h-0 overflow-hidden">
             <Routes>
               <Route path="/" element={<Upload />} />
               <Route path="/analysis" element={<Analysis />} />

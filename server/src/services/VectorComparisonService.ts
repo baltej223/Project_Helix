@@ -2,6 +2,7 @@ import { Pinecone } from '@pinecone-database/pinecone';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import config from '../config/index.js';
 import Clause from '../models/Clause.js';
+import { RiskScoringService } from './RiskScoringService.js';
 
 const genAI = new GoogleGenerativeAI(config.geminiApiKey);
 const pc = new Pinecone({ apiKey: config.pineconeApiKey });
@@ -40,6 +41,9 @@ export class VectorComparisonService {
           standardClauseText,
           deviationFlag,
         });
+
+        // 5. Compute Final Risk Score
+        await RiskScoringService.computeFinalRiskScore(clauseId);
 
         console.log(`Vector comparison complete for clause: ${clauseId}. Similarity: ${similarityScore}`);
       }

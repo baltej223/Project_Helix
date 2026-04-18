@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, type RequestHandler } from 'express';
 import healthRouter from './health.js';
 import documentRouter from './document.js';
 import { authenticate } from '../middleware/auth.js';
@@ -9,7 +9,7 @@ const router = Router();
 router.use('/health', healthRouter);
 
 // Protected routes (middleware applied below this line)
-router.use(authenticate);
+router.use(authenticate as RequestHandler);
 
 // Document routes
 router.use('/documents', documentRouter);

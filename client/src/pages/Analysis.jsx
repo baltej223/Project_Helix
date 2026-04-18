@@ -8,9 +8,9 @@ import Badge from '../components/ui/Badge';
 
 const Analysis = () => {
   return (
-    <div className="flex h-full bg-background overflow-hidden">
+    <div className="flex h-full min-h-0 bg-background overflow-hidden">
       {/* Left: Document Viewer */}
-      <section className="flex-[1.2] bg-white p-10 flex flex-col overflow-hidden border-r border-surface-container-high relative">
+      <section className="flex-[1.2] min-h-0 bg-white p-10 flex flex-col overflow-hidden border-r border-surface-container-high relative">
         <div className="flex justify-between items-center mb-10">
           <div className="flex items-center gap-6">
             <div className="p-3.5 bg-linear-to-br from-primary/10 to-transparent rounded-2xl text-primary border border-primary/5 shadow-inner">
@@ -32,7 +32,7 @@ const Analysis = () => {
           </div>
         </div>
 
-        <div className="flex-1 bg-surface-container-low/20 rounded-[2.5rem] border border-surface-container-high shadow-inner overflow-y-auto p-16 mx-auto w-full max-w-3xl relative">
+        <div className="flex-1 min-h-0 bg-surface-container-low/20 rounded-[2.5rem] border border-surface-container-high shadow-inner overflow-y-auto p-16 mx-auto w-full max-w-3xl relative">
           <div className="absolute top-0 left-0 w-full h-32 bg-linear-to-b from-white/80 to-transparent pointer-events-none"></div>
           
           <div className="space-y-10 text-on-surface-variant font-serif text-[16px] leading-relaxed relative z-10">
@@ -69,7 +69,7 @@ const Analysis = () => {
       </section>
 
       {/* Right: AI Analysis Panel */}
-      <section className="flex-1 bg-surface-container-low/30 flex flex-col overflow-hidden">
+      <section className="flex-1 min-h-0 bg-surface-container-low/30 flex flex-col overflow-hidden">
         <div className="p-10">
           <div className="flex items-center justify-between mb-10">
             <div className="flex items-center gap-3">
@@ -122,7 +122,7 @@ const Analysis = () => {
           </Card>
         </div>
 
-        <div className="flex-1 overflow-y-auto px-10 pb-10 space-y-6">
+        <div className="flex-1 min-h-0 overflow-y-auto px-10 pb-10 space-y-6">
           <div className="sticky top-0 bg-surface-container-low/80 backdrop-blur-md py-4 z-10 border-b border-surface-container-high/50 flex items-center justify-between">
             <Text variant="label">Flagged Clauses (3)</Text>
             <Badge variant="neutral">Sorted by Impact</Badge>
