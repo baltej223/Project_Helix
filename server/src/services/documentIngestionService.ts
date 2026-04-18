@@ -1,9 +1,8 @@
+import { extractTextWithOcr } from '../clients/ocrClient.js';
 import {
   DocumentUploadMetadata,
   InternalDocument,
-  OcrExtractionResult,
 } from '../schemas/documentSchemas.js';
-import { extractTextWithOcr } from '../clients/ocrClient.js';
 
 interface IngestDocumentInput {
   file: Express.Multer.File;
@@ -12,14 +11,11 @@ interface IngestDocumentInput {
 }
 
 interface IngestDocumentResult {
-  ocr: OcrExtractionResult;
+  extractedText: string;
   internalDocument: InternalDocument;
 }
 
-function buildInternalDocument(
-  input: IngestDocumentInput,
-  ocr: OcrExtractionResult
-): InternalDocument {
+function buildInternalDocument(input: IngestDocumentInput, extractedText: string): InternalDocument {
   return {
     ownerId: input.ownerId,
     receivedAt: new Date().toISOString(),
@@ -29,17 +25,33 @@ function buildInternalDocument(
       mimeType: input.file.mimetype,
       fileSizeBytes: input.file.size,
     },
-    ocr,
+    ocr: {
+      extractedText,
+      metadata: {
+        filename: input.file.originalname,
+        mimeType: input.file.mimetype,
+        fileSizeBytes: input.file.size,
+        durationMs: 0,
+        wordCount: 0,
+        pageCount: null,
+      },
+    },
   };
 }
 
 export async function ingestDocument(
   input: IngestDocumentInput
 ): Promise<IngestDocumentResult> {
-  const ocr = await extractTextWithOcr(input.file);
+  const ocrResult = await extractTextWithOcr(input.file);
 
   // To be implemented later
-  const internalDocument = buildInternalDocument(input, ocr);
+  const internalDocument = buildInternalDocument(input, ocrResult.extractedText);
 
-  return { ocr, internalDocument };
+  return {
+    extractedText: ocrResult.extractedText,
+    internalDocument: {
+      ...internalDocument,
+      ocr: ocrResult,
+    },
+  };
 }

@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction, ErrorRequestHandler } from 'express';
+import { ErrorRequestHandler } from 'express';
 import config from '../config/index.js';
 
 export class AppError extends Error {
@@ -14,13 +14,8 @@ export class AppError extends Error {
   }
 }
 
-export const errorHandler: ErrorRequestHandler = (
-  err: Error | AppError,
-  _req: Request,
-  res: Response,
-  _next: NextFunction
-) => {
-  const statusCode = 'statusCode' in err ? err.statusCode : 500;
+export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
+  const statusCode = err instanceof AppError ? err.statusCode : 500;
   const message = err.message || 'Internal Server Error';
 
   if (config.isDevelopment) {

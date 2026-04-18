@@ -3,25 +3,26 @@ import FormData from 'form-data';
 import config from '../config/index.js';
 import { AppError } from '../middleware/errorHandler.js';
 import {
-  ocrExtractResponseSchema,
   OcrExtractionResult,
+  ocrExtractResponseSchema,
 } from '../schemas/documentSchemas.js';
 
 export async function extractTextWithOcr(
   file: Express.Multer.File
 ): Promise<OcrExtractionResult> {
   try {
-    const formData = new FormData();
-    formData.append('file', file.buffer, {
+    const form = new FormData();
+    form.append('file', file.buffer, {
       filename: file.originalname,
       contentType: file.mimetype,
+      knownLength: file.size,
     });
 
-    const response = await axios.post(`${config.ocrBaseUrl}/extract`, formData, {
-      headers: formData.getHeaders(),
+    const response = await axios.post(`${config.ocrBaseUrl}/ocr/extract`, form, {
+      headers: form.getHeaders(),
       timeout: config.ocrRequestTimeoutMs,
-      maxBodyLength: Infinity,
       maxContentLength: Infinity,
+      maxBodyLength: Infinity,
       validateStatus: (status) => status >= 200 && status < 500,
     });
 
@@ -35,7 +36,7 @@ export async function extractTextWithOcr(
 
     const parsed = ocrExtractResponseSchema.safeParse(response.data);
     if (!parsed.success) {
-      throw new AppError('OCR service returned an invalid response', 502);
+      throw new AppError('OCR service returned an invalid response payload', 502);
     }
 
     return parsed.data.data;
@@ -44,6 +45,6 @@ export async function extractTextWithOcr(
       throw error;
     }
 
-    throw new AppError('Failed to reach OCR service', 502);
+    throw new AppError('Failed to communicate with OCR service', 502);
   }
 }

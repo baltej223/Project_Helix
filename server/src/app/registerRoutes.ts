@@ -1,4 +1,4 @@
-import type { Application } from 'express';
+import { Application } from 'express';
 import router from '../routes/index.js';
 
 export function registerRoutes(app: Application): void {

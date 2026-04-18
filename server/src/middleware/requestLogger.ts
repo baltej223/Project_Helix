@@ -8,7 +8,7 @@ const getFormat = () => {
   if (config.isProduction) {
     return ':method :url :status :res[content-length] - :response-time ms';
   }
-  return ':method :url :status :res[content-length] - :response-time ms\n:body';
+  return ':method :url :status :res[content-length] - :response-time ms\\n:body';
 };
 
 export const requestLogger = morgan(getFormat());

@@ -1,12 +1,12 @@
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
 
 const router = Router();
 
-router.get('/', (_req: Request, res: Response) => {
-  res.json({
+router.get('/', (_req, res) => {
+  res.status(200).json({
     status: 'ok',
+    service: 'project-helix-server',
     timestamp: new Date().toISOString(),
-    uptime: process.uptime(),
   });
 });
 
