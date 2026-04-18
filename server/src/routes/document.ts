@@ -1,97 +1,83 @@
-import { Router, Response } from 'express';
-import { z } from 'zod';
+import { Router, Response, NextFunction, Request } from 'express';
+import multer from 'multer';
 import { AuthenticatedRequest } from '../middleware/auth.js';
-import Document, { DocumentStatus } from '../models/Document.js';
-import { DocumentParsingService } from '../services/DocumentParsingService.js';
+import config from '../config/index.js';
+import { AppError } from '../middleware/errorHandler.js';
+import { ingestDocument } from '../services/documentIngestionService.js';
+import {
+  documentUploadMetadataSchema,
+  OcrExtractionResult,
+} from '../schemas/documentSchemas.js';
 
 const router = Router();
 
-// Validation schema for document upload metadata
-const uploadSchema = z.object({
-  fileUrl: z.string().url(),
-  fileName: z.string().min(1),
+const supportedMimeTypes = new Set([
+  'application/pdf',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+]);
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: config.uploadMaxFileSizeBytes },
+  fileFilter: (_req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
+    if (!supportedMimeTypes.has(file.mimetype)) {
+      cb(new AppError('Invalid file type. Only PDF and DOCX are allowed.', 400));
+      return;
+    }
+
+    cb(null, true);
+  },
 });
 
 /**
  * @route POST /documents
- * @desc Receive file URL and metadata after Firebase upload
+ * @desc Upload a document and extract raw text via OCR service
  * @access Private
  */
-router.post('/', async (req: AuthenticatedRequest, res: Response) => {
-  try {
-    // 1. Validate request body
-    const validation = uploadSchema.safeParse(req.body);
-    if (!validation.success) {
-      return res.status(400).json({
-        success: false,
-        message: 'Invalid request body',
-        errors: validation.error.errors,
+router.post(
+  '/',
+  upload.single('file'),
+  async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+    try {
+      if (!req.file) {
+        throw new AppError('Missing file. Use multipart/form-data with field "file".', 400);
+      }
+
+      if (req.file.size === 0) {
+        throw new AppError('Uploaded file is empty.', 400);
+      }
+
+      const metadataValidation = documentUploadMetadataSchema.safeParse(req.body);
+      if (!metadataValidation.success) {
+        return res.status(400).json({
+          success: false,
+          message: 'Invalid upload metadata',
+          errors: metadataValidation.error.errors,
+        });
+      }
+
+      const { ocr } = await ingestDocument({
+        file: req.file,
+        metadata: metadataValidation.data,
+        ownerId: req.userId,
       });
-    }
 
-    const { fileUrl, fileName } = validation.data;
-
-    // 2. Validate file type (PDF/DOCX)
-    const allowedExtensions = ['.pdf', '.docx'];
-    const fileExtension = fileName.toLowerCase().substring(fileName.lastIndexOf('.'));
-    
-    if (!allowedExtensions.includes(fileExtension)) {
-      return res.status(400).json({
-        success: false,
-        message: 'Invalid file type. Only PDF and DOCX are allowed.',
+      return res.status(200).json({
+        success: true,
+        data: buildOcrResponse(ocr),
       });
+    } catch (error) {
+      console.error('Error processing document upload:', error);
+      return next(error);
     }
-
-    // 3. Store reference in MongoDB
-    const document = await Document.create({
-      userId: req.userId,
-      fileUrl,
-      fileName,
-      status: DocumentStatus.PROCESSING, // Set to processing immediately
-    });
-
-    // 4. Trigger parsing in the background
-    // We don't await this to return the response quickly
-    DocumentParsingService.parseDocument(
-      (document._id as any).toString(),
-      fileUrl,
-      fileName
-    ).catch((err) => {
-      console.error(`Background parsing failed for ${document._id}:`, err);
-    });
-
-    return res.status(201).json({
-      success: true,
-      message: 'Document received and parsing started',
-      data: document,
-    });
-  } catch (error: any) {
-    console.error('Error storing document:', error);
-    return res.status(500).json({
-      success: false,
-      message: 'Internal server error while storing document reference',
-    });
   }
-});
+);
 
-/**
- * @route GET /documents
- * @desc Get all documents for the authenticated user
- * @access Private
- */
-router.get('/', async (req: AuthenticatedRequest, res: Response) => {
-  try {
-    const documents = await Document.find({ userId: req.userId }).sort({ createdAt: -1 });
-    return res.json({
-      success: true,
-      data: documents,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: 'Error fetching documents',
-    });
-  }
-});
+function buildOcrResponse(ocr: OcrExtractionResult) {
+  return {
+    extractedText: ocr.extractedText,
+    metadata: ocr.metadata,
+  };
+}
 
 export default router;

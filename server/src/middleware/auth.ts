@@ -8,6 +8,8 @@ const clerkClient = createClerkClient({ secretKey: config.clerkSecretKey });
 export interface AuthenticatedRequest extends Request {
   userId?: string;
   user?: any;
+  file?: Express.Multer.File;
+  files?: Express.Multer.File[];
 }
 
 export const authenticate = async (
