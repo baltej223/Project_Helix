@@ -6,6 +6,7 @@ const api = axios.create({
   baseURL: API_URL,
 });
 
+// ─── Health ───
 export const getHealth = async () => {
   const response = await api.get('/health');
   return response.data;
@@ -20,7 +21,7 @@ export const uploadDocument = async (file, title) => {
       'Content-Type': 'multipart/form-data',
     },
   });
-  return response.data;
+  return res.data; // { status, data: { documentId, extractedText, cleanedText, metadata, pii } }
 };
 
 export const classifyDocument = async (documentId) => {

@@ -469,218 +469,180 @@ const Upload = () => {
                   {uploading ? "Uploading..." : analyzing ? "Analyzing..." : "Start Analysis"}
                   <ArrowRight size={18} />
                 </Button>
-              </Flex>
-            </GridItem>
-          </Grid>
-        ) : (
-          <Box maxW="600px" mx="auto">
-            <Box
-              bg="white"
-              border="1px solid"
-              borderColor="#E2E8F0"
-              borderRadius="3xl"
-              p="8"
-              shadow="0 4px 30px rgba(0,0,0,0.06)"
-            >
-              <Flex align="center" gap="3" mb="6">
-                <Box
-                  w="10"
-                  h="10"
-                  borderRadius="xl"
-                  bg="linear-gradient(135deg, #F0FFF4, #DCFCE7)"
-                  color="#16A34A"
-                  align="center"
-                  justify="center"
-                >
-                  <Sparkles size={20} />
-                </Box>
-                <Box>
-                  <Text fontSize="lg" fontWeight="800" color="#0F1B2D">
-                    Domain Detected
-                  </Text>
-                  <Text fontSize="sm" color="#64748B">
-                    Confirm to start clause analysis
-                  </Text>
-                </Box>
-              </Flex>
 
-              <Box mb="6">
-                <Text
-                  fontSize="xs"
-                  fontWeight="700"
-                  color="#64748B"
-                  mb="2"
-                  letterSpacing="0.1em"
-                >
-                  DETECTED DOMAIN
-                </Text>
-                <Input
-                  value={domainInput}
-                  onChange={(e) => setDomainInput(e.target.value)}
-                  bg="#F8FAFC"
-                  border="1px solid"
-                  borderColor="#E2E8F0"
-                  borderRadius="xl"
-                  px="4"
-                  h="12"
-                  fontSize="sm"
-                  _focus={{
-                    borderColor: "#CBD5E0",
-                    outline: "none",
-                    shadow: "0 0 0 3px rgba(15,23,42,0.08)",
-                  }}
-                />
-              </Box>
-
-              <Box mb="6">
-                <Text
-                  fontSize="xs"
-                  fontWeight="700"
-                  color="#64748B"
-                  mb="3"
-                  letterSpacing="0.1em"
-                >
-                  SELECT YOUR PARTY
-                </Text>
-                <SimpleGrid columns={1} gap="3">
-                  {classificationResult.partyOptions?.map((party) => (
-                    <Box
-                      key={party}
-                      as="label"
-                      display="flex"
-                      alignItems="center"
-                      gap="3"
-                      p="4"
-                      border="2px solid"
-                      borderColor={
-                        selectedParty === party ? "#0F172A" : "#E2E8F0"
-                      }
-                      borderRadius="xl"
-                      cursor="pointer"
-                      bg={selectedParty === party ? "#F8FAFC" : "white"}
+                <SimpleGrid columns={2} gap="4" mt="10" w="100%" maxW="480px">
+                  {[
+                    {
+                      icon: <Lock size={15} />,
+                      label: "SECURITY",
+                      value: "End-to-End Encryption",
+                      gradient: "linear-gradient(135deg, #F1F5F9, #E2E8F0)",
+                      color: "#0F172A",
+                    },
+                    {
+                      icon: <Zap size={15} />,
+                      label: "SPEED",
+                      value: "Instant Pre-scan Active",
+                      gradient: "linear-gradient(135deg, #F0FFF4, #DCFCE7)",
+                      color: "#16A34A",
+                    },
+                  ].map((item) => (
+                    <Flex
+                      key={item.label}
+                      bg="white" border="1px solid" borderColor="#E2E8F0"
+                      borderRadius="xl" p="4" gap="3" align="center"
+                      shadow="0 1px 3px rgba(0,0,0,0.03)"
                       transition="all 0.2s"
-                      _hover={{ borderColor: "#CBD5E0" }}
-                      onClick={() => setSelectedParty(party)}
+                      _hover={{ shadow: "0 4px 12px rgba(0,0,0,0.05)", transform: "translateY(-1px)" }}
                     >
-                      <input
-                        type="radio"
-                        name="party"
-                        value={party}
-                        checked={selectedParty === party}
-                        onChange={() => setSelectedParty(party)}
-                        style={{ display: "none" }}
-                      />
-                      <Box
-                        w="5"
-                        h="5"
-                        borderRadius="full"
-                        border="2px solid"
-                        borderColor={selectedParty === party ? "#0F172A" : "#CBD5E0"}
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
+                      <Flex
+                        w="10" h="10" borderRadius="xl"
+                        bg={item.gradient} color={item.color}
+                        align="center" justify="center" flexShrink="0"
                       >
-                        {selectedParty === party && (
-                          <Box w="2.5" h="2.5" borderRadius="full" bg="#0F172A" />
-                        )}
+                        {item.icon}
+                      </Flex>
+                      <Box>
+                        <Text fontSize="9px" fontWeight="800" color="#94A3B8" letterSpacing="0.15em">
+                          {item.label}
+                        </Text>
+                        <Text fontSize="xs" fontWeight="700" color="#475569">
+                          {item.value}
+                        </Text>
                       </Box>
-                      <Text fontSize="sm" fontWeight="600" color="#0F1B2D">
-                        {party}
-                      </Text>
-                    </Box>
+                    </Flex>
                   ))}
                 </SimpleGrid>
-              </Box>
-
-              <Flex gap="3">
-                <Button
-                  flex="1"
-                  variant="outline"
-                  h="12"
-                  borderRadius="xl"
-                  borderColor="#E2E8F0"
-                  color="#64748B"
-                  fontWeight="700"
-                  onClick={handleCancel}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  flex="2"
-                  h="12"
-                  bg="linear-gradient(135deg, #0F172A, #1E293B)"
-                  color="white"
-                  borderRadius="xl"
-                  fontWeight="800"
-                  shadow="0 4px 16px rgba(15,23,42,0.25)"
-                  _hover={{
-                    transform: "translateY(-1px)",
-                    shadow: "0 6px 20px rgba(15,23,42,0.3)",
-                  }}
-                  disabled={!selectedParty}
-                  onClick={handleConfirm}
-                >
-                  Confirm & Start Analysis
-                  <ArrowRight size={16} />
-                </Button>
               </Flex>
             </Box>
-          </Box>
-        )}
+          </GridItem>
+
+          {/* Sidebar */}
+          <GridItem>
+            <Flex direction="column" gap="5">
+              {/* Document Classification Card */}
+              <Box
+                bg="white" border="1px solid" borderColor="#E2E8F0"
+                borderRadius="2xl" p="7"
+                shadow="0 1px 3px rgba(0,0,0,0.03)"
+              >
+                <Text
+                  fontSize="xs" fontWeight="800" letterSpacing="0.15em"
+                  color="#94A3B8" mb="5"
+                >
+                  DOCUMENT CLASSIFICATION
+                </Text>
+
+                {[
+                  { label: "CONTRACT DOMAIN", id: "domain", defaultValue: "Commercial Business Agreement", options: ["Commercial Business Agreement", "Residential Lease", "Employment Contract"] },
+                  { label: "USER PARTY IDENTITY", id: "party", defaultValue: "Landlord / Lessor", options: ["Landlord / Lessor", "Tenant / Lessee", "Service Provider"] },
+                ].map((field) => (
+                  <Box key={field.id} mb="5">
+                    <Text fontSize="10px" fontWeight="800" letterSpacing="0.14em" color="#94A3B8" mb="2">
+                      {field.label}
+                    </Text>
+                    <Box
+                      as="select" id={field.id}
+                      defaultValue={field.defaultValue}
+                      w="100%" h="12"
+                      border="1px solid" borderColor="#E2E8F0"
+                      bg="#F8FAFC" borderRadius="xl" px="4"
+                      fontSize="sm" color="#1E293B" fontWeight="600"
+                      _focus={{ borderColor: "#CBD5E0", outline: "none", shadow: "0 0 0 3px rgba(15,23,42,0.08)" }}
+                      transition="all 0.2s"
+                    >
+                      {field.options.map((opt) => <option key={opt}>{opt}</option>)}
+                    </Box>
+                  </Box>
+                ))}
+
+                {/* Toggle */}
+                <Flex justify="space-between" gap="4" align="flex-start">
+                  <Box flex="1">
+                    <Text fontSize="sm" fontWeight="700" color="#1E293B">Privacy Redaction</Text>
+                    <Text fontSize="xs" color="#64748B" mt="1" lineHeight="1.7">
+                      Automatically redact names, addresses, and financial values
+                      before AI processing.
+                    </Text>
+                  </Box>
+                  <Box
+                    w="40px" h="22px" borderRadius="full"
+                    bg="linear-gradient(135deg, #0F172A, #1E293B)"
+                    position="relative" cursor="pointer" flexShrink="0" mt="1"
+                    shadow="inset 0 1px 3px rgba(0,0,0,0.1)"
+                  >
+                    <Box
+                      w="16px" h="16px" borderRadius="full" bg="white"
+                      position="absolute" top="3px" left="21px"
+                      shadow="0 1px 4px rgba(0,0,0,0.15)"
+                    />
+                  </Box>
+                </Flex>
+              </Box>
+
+              {/* AI Recommendation */}
+              <Box
+                bg="linear-gradient(135deg, #F8FAFC, #E2E8F0)"
+                border="1px solid" borderColor="#E2E8F0"
+                borderRadius="2xl" p="6"
+              >
+                <Flex align="center" gap="2" mb="3">
+                  <Sparkles size={14} color="#0F172A" />
+                  <Text fontSize="xs" fontWeight="800" color="#0F172A" letterSpacing="0.08em">
+                    AI RECOMMENDATION
+                  </Text>
+                </Flex>
+                <Text fontSize="sm" color="#475569" lineHeight="1.8">
+                  Based on current legal trends, we recommend enabling clause
+                  comparison for multi-jurisdiction compliance.
+                </Text>
+              </Box>
+
+              {/* Process Button */}
+              <Button
+                w="100%" h="14"
+                bg="linear-gradient(135deg, #0F172A, #1E293B)"
+                color="white" borderRadius="2xl"
+                fontWeight="800" fontSize="md"
+                shadow="0 4px 20px rgba(15,23,42,0.3)"
+                _hover={{
+                  transform: "translateY(-2px)",
+                  shadow: "0 8px 30px rgba(15,23,42,0.4)",
+                }}
+                _active={{ transform: "translateY(0)" }}
+                transition="all 0.3s"
+              >
+                Process Analysis
+                <ArrowRight size={18} />
+              </Button>
+            </Flex>
+          </GridItem>
+        </Grid>
 
         <SimpleGrid columns={{ base: 1, md: 3 }} gap="5" mt="8">
           {[
-            {
-              label: "INSTITUTIONAL SECURITY",
-              text: "SOC2 Type II compliant storage with zero-knowledge encryption protocols.",
-              gradient: "linear-gradient(135deg, #F1F5F9, #E2E8F0)",
-              color: "#0F172A",
-            },
-            {
-              label: "LEGAL INTEGRITY",
-              text: "Models trained on 10M+ curated judicial precedents and federal statutes.",
-              gradient: "linear-gradient(135deg, #F0FFF4, #DCFCE7)",
-              color: "#16A34A",
-            },
-            {
-              label: "DOCUMENT LIFECYCLE",
-              text: "Automated versioning and audit trails for every revision made.",
-              gradient: "linear-gradient(135deg, #FFFBEB, #FEF3C7)",
-              color: "#D97706",
-            },
+            { label: "INSTITUTIONAL SECURITY", text: "SOC2 Type II compliant storage with zero-knowledge encryption protocols.", gradient: "linear-gradient(135deg, #F1F5F9, #E2E8F0)", color: "#0F172A" },
+            { label: "LEGAL INTEGRITY", text: "Models trained on 10M+ curated judicial precedents and federal statutes.", gradient: "linear-gradient(135deg, #F0FFF4, #DCFCE7)", color: "#16A34A" },
+            { label: "DOCUMENT LIFECYCLE", text: "Automated versioning and audit trails for every revision made.", gradient: "linear-gradient(135deg, #FFFBEB, #FEF3C7)", color: "#D97706" },
           ].map((item) => (
             <Box
               key={item.label}
-              bg="white"
-              borderRadius="2xl"
-              p="7"
-              border="1px solid"
-              borderColor="#E2E8F0"
+              bg="white" borderRadius="2xl" p="7"
+              border="1px solid" borderColor="#E2E8F0"
               shadow="0 1px 3px rgba(0,0,0,0.03)"
               transition="all 0.3s"
-              _hover={{
-                transform: "translateY(-3px)",
-                shadow: "0 8px 25px rgba(0,0,0,0.06)",
-              }}
+              _hover={{ transform: "translateY(-3px)", shadow: "0 8px 25px rgba(0,0,0,0.06)" }}
             >
               <Flex
-                w="10"
-                h="10"
-                borderRadius="xl"
-                mb="4"
-                bg={item.gradient}
-                color={item.color}
-                align="center"
-                justify="center"
+                w="10" h="10" borderRadius="xl" mb="4"
+                bg={item.gradient} color={item.color}
+                align="center" justify="center"
               >
                 <Shield size={16} />
               </Flex>
               <Text
-                fontSize="10px"
-                fontWeight="800"
-                letterSpacing="0.15em"
-                color="#94A3B8"
-                mb="3"
+                fontSize="10px" fontWeight="800" letterSpacing="0.15em"
+                color="#94A3B8" mb="3"
               >
                 {item.label}
               </Text>

@@ -3,8 +3,8 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "dev": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\"",
-    "build": "npm run build --prefix client && npm run build --prefix server"
+    "dev": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\" \" npm run dev --prefix ocr\"",
+    "build": "npm run build --prefix client && npm run build --prefix server && npm run build --prefix ocr"
   },
   "devDependencies": {
     "concurrently": "^9.2.1"

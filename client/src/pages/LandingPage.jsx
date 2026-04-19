@@ -102,18 +102,17 @@ const HeroSection = () => (
             letterSpacing="-0.04em"
             mb="7"
           >
-            Understand Legal
-            <br />
-            Documents{" "}
+            Understand 
+            <br />          
             <Text
               as="span"
               bgGradient="to-r" gradientFrom="#0F172A" gradientTo="#334155"
               bgClip="text" color="transparent"
             >
-              Before They
+              Before Signing 
             </Text>
-            <br />
-            Understand You
+             <br />
+             Blindly 
           </Text>
 
           <Text
@@ -124,8 +123,10 @@ const HeroSection = () => (
             mb="10"
             fontWeight="400"
           >
-            LegalLens AI scans every clause, flags hidden risks, and translates
-            dense legal jargon into plain English — so you never sign blind again.
+            {/* LegalLens scans every clause, flags hidden risks, and translates
+            dense legal jargon into plain English — so you never sign blind again. */}
+            LegalLens scans every clause, flags hidden risks, and translates
+             legal jargon into plain English—so you know exactly what you’re signing.
           </Text>
 
           <Flex gap="4" flexWrap="wrap" mb="12">
@@ -166,11 +167,11 @@ const HeroSection = () => (
           </Flex>
 
           {/* Trust */}
-          <Flex gap="8" flexWrap="wrap" align="center">
+          <Flex gap="20" flexWrap="wrap" align="center">
             {[
               { icon: <Lock size={13} />, label: "SOC2 Compliant" },
-              { icon: <Shield size={13} />, label: "GDPR Ready" },
-              { icon: <TrendingUp size={13} />, label: "10M+ Precedents" },
+              { icon: <Shield size={13} />, label: "DPDPA Ready" },
+              
             ].map((t) => (
               <Flex key={t.label} align="center" gap="2.5">
                 <Flex
@@ -305,22 +306,22 @@ const FeaturesSection = () => {
     {
       icon: <ShieldAlert size={24} />,
       title: "Risk Detection",
-      description: "Flags high-risk clauses like uncapped liabilities, aggressive indemnity, and non-standard terms.",
+      description: "Flags high-risk clauses like uncapped liabilities, strict indemnity, and non-standard terms.",
       gradient: "linear-gradient(135deg, #FEF2F2, #FEE2E2)",
       iconColor: "#DC2626",
       span: { base: 1, md: 1 },
     },
     {
       icon: <FileSearch size={24} />,
-      title: "Clause Breakdown",
-      description: "Dissects every section with clause-level analysis, cross-referencing with statutory frameworks.",
+      title: "Consult Professionals",
+      description: "Connect with experienced lawyers for clear, reliable advice tailored to your specific documents and concerns.",
       gradient: "linear-gradient(135deg, #F0FFF4, #DCFCE7)",
       iconColor: "#16A34A",
       span: { base: 1, md: 1 },
     },
     {
       icon: <Lightbulb size={24} />,
-      title: "Plain English Insights",
+      title: "Simple English Insights",
       description: "Translates dense legal language into clear, actionable summaries anyone can understand.",
       gradient: "linear-gradient(135deg, #FFFBEB, #FEF3C7)",
       iconColor: "#D97706",
@@ -365,8 +366,8 @@ const FeaturesSection = () => {
             fontSize={{ base: "md", md: "lg" }} color="#64748B"
             maxW="580px" lineHeight="1.85"
           >
-            From clause-level risk analysis to AI-generated negotiation strategies —
-            powered by institutional-grade legal intelligence.
+           From clause-level risk analysis to simplified, human-readable summaries—
+powered by institutional-grade legal intelligence.
           </Text>
         </Flex>
 
