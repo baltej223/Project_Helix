@@ -29,11 +29,11 @@ const LandingNavbar = () => {
             w="10"
             h="10"
             borderRadius="xl"
-            bg="linear-gradient(135deg, #2B6CB0, #3182CE)"
+            bg="linear-gradient(135deg, #0F172A, #1E293B)"
             color="white"
             align="center"
             justify="center"
-            shadow="0 4px 14px rgba(49, 130, 206, 0.35)"
+            shadow="0 4px 14px rgba(15, 23, 42, 0.35)"
           >
             <Shield size={19} />
           </Flex>
@@ -104,15 +104,15 @@ const LandingNavbar = () => {
             as={RouterLink}
             to="/upload"
             size="sm"
-            bg="linear-gradient(135deg, #2B6CB0, #3182CE)"
+            bg="linear-gradient(135deg, #0F172A, #1E293B)"
             color="white"
             fontWeight="700"
             borderRadius="xl"
             px="6"
             py="5"
-            shadow="0 2px 10px rgba(49, 130, 206, 0.3)"
+            shadow="0 2px 10px rgba(15, 23, 42, 0.3)"
             _hover={{
-              shadow: "0 6px 20px rgba(49, 130, 206, 0.4)",
+              shadow: "0 6px 20px rgba(15, 23, 42, 0.4)",
               transform: "translateY(-2px)",
             }}
             _active={{ transform: "translateY(0)" }}

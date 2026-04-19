@@ -65,9 +65,9 @@ const Upload = () => {
                 minH="480px" p="10"
                 transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
                 _hover={{
-                  borderColor: "#93C5FD",
-                  bg: "linear-gradient(135deg, #F0F7FF, #EFF6FF)",
-                  shadow: "inset 0 0 30px rgba(49,130,206,0.03)",
+                  borderColor: "#CBD5E0",
+                  bg: "linear-gradient(135deg, #F8FAFC, #F8FAFC)",
+                  shadow: "inset 0 0 30px rgba(15,23,42,0.03)",
                 }}
                 cursor="pointer" position="relative"
               >
@@ -75,14 +75,14 @@ const Upload = () => {
                 <Box
                   position="absolute" top="20%" right="15%"
                   w="120px" h="120px" borderRadius="full"
-                  bg="radial-gradient(circle, rgba(49,130,206,0.04) 0%, transparent 70%)"
+                  bg="radial-gradient(circle, rgba(15,23,42,0.04) 0%, transparent 70%)"
                 />
 
                 <Flex
                   w="20" h="20" borderRadius="2xl"
-                  bg="linear-gradient(135deg, #EBF8FF, #DBEAFE)"
-                  color="#2B6CB0" align="center" justify="center"
-                  mb="6" shadow="0 4px 16px rgba(49,130,206,0.12)"
+                  bg="linear-gradient(135deg, #F1F5F9, #E2E8F0)"
+                  color="#0F172A" align="center" justify="center"
+                  mb="6" shadow="0 4px 16px rgba(15,23,42,0.12)"
                 >
                   <FileUp size={32} />
                 </Flex>
@@ -100,13 +100,13 @@ const Upload = () => {
                   PDF, DOCX, or scanned images. Max file size 50MB for deep neural processing.
                 </Text>
                 <Button
-                  bg="linear-gradient(135deg, #2B6CB0, #3182CE)"
+                  bg="linear-gradient(135deg, #0F172A, #1E293B)"
                   color="white" borderRadius="xl"
                   px="8" py="6" fontWeight="700" fontSize="md"
-                  shadow="0 4px 16px rgba(49,130,206,0.3)"
+                  shadow="0 4px 16px rgba(15,23,42,0.3)"
                   _hover={{
                     transform: "translateY(-2px)",
-                    shadow: "0 8px 25px rgba(49,130,206,0.35)",
+                    shadow: "0 8px 25px rgba(15,23,42,0.35)",
                   }}
                   _active={{ transform: "translateY(0)" }}
                   transition="all 0.3s"
@@ -121,8 +121,8 @@ const Upload = () => {
                       icon: <Lock size={15} />,
                       label: "SECURITY",
                       value: "End-to-End Encryption",
-                      gradient: "linear-gradient(135deg, #EBF8FF, #DBEAFE)",
-                      color: "#2B6CB0",
+                      gradient: "linear-gradient(135deg, #F1F5F9, #E2E8F0)",
+                      color: "#0F172A",
                     },
                     {
                       icon: <Zap size={15} />,
@@ -193,7 +193,7 @@ const Upload = () => {
                       border="1px solid" borderColor="#E2E8F0"
                       bg="#F8FAFC" borderRadius="xl" px="4"
                       fontSize="sm" color="#1E293B" fontWeight="600"
-                      _focus={{ borderColor: "#93C5FD", outline: "none", shadow: "0 0 0 3px rgba(49,130,206,0.08)" }}
+                      _focus={{ borderColor: "#CBD5E0", outline: "none", shadow: "0 0 0 3px rgba(15,23,42,0.08)" }}
                       transition="all 0.2s"
                     >
                       {field.options.map((opt) => <option key={opt}>{opt}</option>)}
@@ -212,7 +212,7 @@ const Upload = () => {
                   </Box>
                   <Box
                     w="40px" h="22px" borderRadius="full"
-                    bg="linear-gradient(135deg, #2B6CB0, #3182CE)"
+                    bg="linear-gradient(135deg, #0F172A, #1E293B)"
                     position="relative" cursor="pointer" flexShrink="0" mt="1"
                     shadow="inset 0 1px 3px rgba(0,0,0,0.1)"
                   >
@@ -227,13 +227,13 @@ const Upload = () => {
 
               {/* AI Recommendation */}
               <Box
-                bg="linear-gradient(135deg, #EFF6FF, #DBEAFE)"
-                border="1px solid" borderColor="#BFDBFE"
+                bg="linear-gradient(135deg, #F8FAFC, #E2E8F0)"
+                border="1px solid" borderColor="#E2E8F0"
                 borderRadius="2xl" p="6"
               >
                 <Flex align="center" gap="2" mb="3">
-                  <Sparkles size={14} color="#2B6CB0" />
-                  <Text fontSize="xs" fontWeight="800" color="#2B6CB0" letterSpacing="0.08em">
+                  <Sparkles size={14} color="#0F172A" />
+                  <Text fontSize="xs" fontWeight="800" color="#0F172A" letterSpacing="0.08em">
                     AI RECOMMENDATION
                   </Text>
                 </Flex>
@@ -246,13 +246,13 @@ const Upload = () => {
               {/* Process Button */}
               <Button
                 w="100%" h="14"
-                bg="linear-gradient(135deg, #2B6CB0, #3182CE)"
+                bg="linear-gradient(135deg, #0F172A, #1E293B)"
                 color="white" borderRadius="2xl"
                 fontWeight="800" fontSize="md"
-                shadow="0 4px 20px rgba(49,130,206,0.3)"
+                shadow="0 4px 20px rgba(15,23,42,0.3)"
                 _hover={{
                   transform: "translateY(-2px)",
-                  shadow: "0 8px 30px rgba(49,130,206,0.4)",
+                  shadow: "0 8px 30px rgba(15,23,42,0.4)",
                 }}
                 _active={{ transform: "translateY(0)" }}
                 transition="all 0.3s"
@@ -270,8 +270,8 @@ const Upload = () => {
             {
               label: "INSTITUTIONAL SECURITY",
               text: "SOC2 Type II compliant storage with zero-knowledge encryption protocols.",
-              gradient: "linear-gradient(135deg, #EBF8FF, #DBEAFE)",
-              color: "#2B6CB0",
+              gradient: "linear-gradient(135deg, #F1F5F9, #E2E8F0)",
+              color: "#0F172A",
             },
             {
               label: "LEGAL INTEGRITY",

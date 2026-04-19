@@ -13,8 +13,8 @@ const FeatureCard = ({ icon, title, description }) => {
       transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
       _hover={{
         transform: "translateY(-4px)",
-        shadow: "0 4px 20px rgba(49, 130, 206, 0.12)",
-        borderColor: "#BEE3F8",
+        shadow: "0 4px 20px rgba(15, 23, 42, 0.12)",
+        borderColor: "#E2E8F0",
       }}
       cursor="pointer"
       position="relative"
@@ -27,8 +27,8 @@ const FeatureCard = ({ icon, title, description }) => {
         right="0"
         h="3px"
         bgGradient="to-r"
-        gradientFrom="#3182CE"
-        gradientTo="#38B2AC"
+        gradientFrom="#1E293B"
+        gradientTo="#475569"
         opacity="0"
         transition="opacity 0.3s ease"
         _groupHover={{ opacity: 1 }}
@@ -37,8 +37,8 @@ const FeatureCard = ({ icon, title, description }) => {
         w="12"
         h="12"
         borderRadius="lg"
-        bg="#EBF8FF"
-        color="#3182CE"
+        bg="#F1F5F9"
+        color="#1E293B"
         align="center"
         justify="center"
         mb="4"

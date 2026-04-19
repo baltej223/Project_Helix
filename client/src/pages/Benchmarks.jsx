@@ -121,15 +121,15 @@ const Benchmarks = () => {
               fontSize="11px"
               fontWeight="700"
               letterSpacing="0.1em"
-              color={item.active ? "#2B6CB0" : "#64748B"}
-              bg={item.active ? "linear-gradient(135deg, #EFF6FF, #DBEAFE)" : "transparent"}
+              color={item.active ? "white" : "#64748B"}
+              bg={item.active ? "linear-gradient(135deg, #0F172A, #1E293B)" : "transparent"}
               borderRadius="xl"
               _hover={{
-                bg: item.active ? "linear-gradient(135deg, #EFF6FF, #DBEAFE)" : "#F1F5F9",
-                color: item.active ? "#2B6CB0" : "#1E293B",
+                bg: item.active ? "linear-gradient(135deg, #0F172A, #1E293B)" : "#F1F5F9",
+                color: item.active ? "white" : "#1E293B",
               }}
               transition="all 0.2s"
-              shadow={item.active ? "0 2px 8px rgba(49,130,206,0.15)" : "none"}
+              shadow={item.active ? "0 2px 8px rgba(15,23,42,0.15)" : "none"}
             >
               {item.icon}
               {item.label}
@@ -139,16 +139,16 @@ const Benchmarks = () => {
 
         <Button
           mt="auto"
-          bg="linear-gradient(135deg, #2B6CB0, #3182CE)"
+          bg="linear-gradient(135deg, #0F172A, #1E293B)"
           color="white"
           h="12"
           borderRadius="xl"
           fontSize="xs"
           fontWeight="800"
           letterSpacing="0.1em"
-          shadow="0 4px 16px rgba(49, 130, 206, 0.25)"
+          shadow="0 4px 16px rgba(15, 23, 42, 0.25)"
           _hover={{
-            shadow: "0 6px 20px rgba(49, 130, 206, 0.35)",
+            shadow: "0 6px 20px rgba(15, 23, 42, 0.35)",
             transform: "translateY(-1px)",
           }}
           transition="all 0.2s"
@@ -217,14 +217,14 @@ const Benchmarks = () => {
               overflow="hidden"
             >
               {/* Decorative gradient strip */}
-              <Box position="absolute" top="0" left="0" right="0" h="4px" bg="linear-gradient(90deg, #2B6CB0, #3182CE, #38B2AC)" />
+              <Box position="absolute" top="0" left="0" right="0" h="4px" bg="linear-gradient(90deg, #0F172A, #1E293B, #475569)" />
 
               <Text fontSize="lg" fontWeight="800" color="#0F1B2D" mb="6">
                 Negotiation Readiness
               </Text>
               <Grid templateColumns="repeat(3, 1fr)" gap="4">
                 <Box>
-                  <Text fontSize="3xl" fontWeight="900" color="#2B6CB0" mb="1">
+                  <Text fontSize="3xl" fontWeight="900" color="#0F172A" mb="1">
                     84%
                   </Text>
                   <Text fontSize="10px" fontWeight="700" letterSpacing="0.12em" color="#94A3B8">
@@ -252,20 +252,20 @@ const Benchmarks = () => {
 
             {/* Recommendation Card */}
             <Box
-              bg="linear-gradient(135deg, #EFF6FF, #DBEAFE)"
+              bg="linear-gradient(135deg, #F8FAFC, #E2E8F0)"
               borderRadius="3xl"
               p={{ base: "6", md: "8" }}
               border="1px solid"
-              borderColor="#BFDBFE"
-              shadow="0 4px 16px rgba(49,130,206,0.1)"
+              borderColor="#E2E8F0"
+              shadow="0 4px 16px rgba(15,23,42,0.1)"
             >
               <Flex align="center" gap="2" mb="4">
-                <Sparkles size={16} color="#2B6CB0" />
+                <Sparkles size={16} color="#0F172A" />
                 <Text
                   fontSize="xs"
                   fontWeight="800"
                   letterSpacing="0.12em"
-                  color="#2B6CB0"
+                  color="#0F172A"
                 >
                   JURIST RECOMMENDATION
                 </Text>

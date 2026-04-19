@@ -41,9 +41,9 @@ function TopNav() {
       <Flex align="center" gap="3.5">
         <Flex
           w="9" h="9" borderRadius="xl"
-          bg="linear-gradient(135deg, #2B6CB0, #3182CE)"
+          bg="linear-gradient(135deg, #0F172A, #1E293B)"
           color="white" align="center" justify="center"
-          shadow="0 3px 12px rgba(49,130,206,0.3)"
+          shadow="0 3px 12px rgba(15,23,42,0.3)"
         >
           <Shield size={17} />
         </Flex>
@@ -82,10 +82,10 @@ function TopNav() {
             _hover={{ color: "#1E293B", bg: "rgba(255,255,255,0.8)" }}
             sx={{
               "&.active": {
-                color: "#1E293B",
-                bg: "white",
+                color: "white",
+                bg: "linear-gradient(135deg, #0F172A, #1E293B)",
                 fontWeight: "700",
-                shadow: "0 1px 3px rgba(0,0,0,0.06)",
+                shadow: "0 4px 12px rgba(15,23,42,0.25)",
               },
             }}
           >

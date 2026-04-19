@@ -32,8 +32,8 @@ const floatAnimation = {
 const pulseGlow = {
   animation: "pulseGlow 3s ease-in-out infinite",
   "@keyframes pulseGlow": {
-    "0%, 100%": { boxShadow: "0 0 20px rgba(49, 130, 206, 0.15)" },
-    "50%": { boxShadow: "0 0 40px rgba(49, 130, 206, 0.3)" },
+    "0%, 100%": { boxShadow: "0 0 20px rgba(15, 23, 42, 0.15)" },
+    "50%": { boxShadow: "0 0 40px rgba(15, 23, 42, 0.3)" },
   },
 };
 
@@ -51,7 +51,7 @@ const HeroSection = () => (
     <Box
       position="absolute" top="-180px" right="-120px"
       w="600px" h="600px" borderRadius="full"
-      bg="radial-gradient(circle, rgba(49,130,206,0.08) 0%, transparent 70%)"
+      bg="radial-gradient(circle, rgba(15,23,42,0.08) 0%, transparent 70%)"
       css={floatAnimation}
     />
     <Box
@@ -69,7 +69,7 @@ const HeroSection = () => (
     {/* Grid pattern overlay */}
     <Box
       position="absolute" inset="0" opacity="0.03"
-      backgroundImage="linear-gradient(rgba(49,130,206,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(49,130,206,0.3) 1px, transparent 1px)"
+      backgroundImage="linear-gradient(rgba(15,23,42,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,42,0.3) 1px, transparent 1px)"
       backgroundSize="60px 60px"
     />
 
@@ -82,11 +82,11 @@ const HeroSection = () => (
         {/* Left */}
         <GridItem>
           <Flex align="center" gap="2" mb="8">
-            <Box w="2" h="2" borderRadius="full" bg="#3182CE" css={pulseGlow} />
+            <Box w="2" h="2" borderRadius="full" bg="#1E293B" css={pulseGlow} />
             <Text
               fontSize="xs" fontWeight="700" letterSpacing="0.18em"
               textTransform="uppercase"
-              bgGradient="to-r" gradientFrom="#3182CE" gradientTo="#319795"
+              bgGradient="to-r" gradientFrom="#1E293B" gradientTo="#334155"
               bgClip="text" color="transparent"
             >
               AI-Powered Legal Intelligence
@@ -107,7 +107,7 @@ const HeroSection = () => (
             Documents{" "}
             <Text
               as="span"
-              bgGradient="to-r" gradientFrom="#2B6CB0" gradientTo="#319795"
+              bgGradient="to-r" gradientFrom="#0F172A" gradientTo="#334155"
               bgClip="text" color="transparent"
             >
               Before They
@@ -131,13 +131,13 @@ const HeroSection = () => (
           <Flex gap="4" flexWrap="wrap" mb="12">
             <Button
               as={RouterLink} to="/upload"
-              bg="linear-gradient(135deg, #2B6CB0 0%, #3182CE 50%, #4299E1 100%)"
+              bg="linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #334155 100%)"
               color="white" size="lg" borderRadius="2xl"
               px="10" py="7" fontWeight="700" fontSize="md"
-              shadow="0 4px 20px rgba(49, 130, 206, 0.35), inset 0 1px 0 rgba(255,255,255,0.15)"
+              shadow="0 4px 20px rgba(15, 23, 42, 0.35), inset 0 1px 0 rgba(255,255,255,0.15)"
               _hover={{
                 transform: "translateY(-3px) scale(1.02)",
-                shadow: "0 12px 35px rgba(49, 130, 206, 0.4), inset 0 1px 0 rgba(255,255,255,0.2)",
+                shadow: "0 12px 35px rgba(15, 23, 42, 0.4), inset 0 1px 0 rgba(255,255,255,0.2)",
               }}
               _active={{ transform: "translateY(-1px) scale(0.98)" }}
               transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
@@ -153,7 +153,7 @@ const HeroSection = () => (
               borderColor="#CBD5E0" borderWidth="1.5px" color="#475569"
               bg="rgba(255,255,255,0.6)" backdropFilter="blur(8px)"
               _hover={{
-                bg: "white", borderColor: "#93C5FD",
+                bg: "white", borderColor: "#CBD5E0",
                 transform: "translateY(-3px)",
                 shadow: "0 8px 25px rgba(0,0,0,0.06)",
               }}
@@ -193,7 +193,7 @@ const HeroSection = () => (
             {/* Glow behind card */}
             <Box
               position="absolute" inset="-20px" borderRadius="3xl"
-              bg="radial-gradient(ellipse at center, rgba(49,130,206,0.08) 0%, transparent 70%)"
+              bg="radial-gradient(ellipse at center, rgba(15,23,42,0.08) 0%, transparent 70%)"
               filter="blur(20px)"
             />
             <Box
@@ -208,9 +208,9 @@ const HeroSection = () => (
                 <Flex align="center" gap="3">
                   <Flex
                     w="10" h="10" borderRadius="xl"
-                    bg="linear-gradient(135deg, #EBF8FF 0%, #DBEAFE 100%)"
-                    color="#2B6CB0" align="center" justify="center"
-                    shadow="0 2px 8px rgba(49,130,206,0.12)"
+                    bg="linear-gradient(135deg, #F1F5F9 0%, #E2E8F0 100%)"
+                    color="#0F172A" align="center" justify="center"
+                    shadow="0 2px 8px rgba(15,23,42,0.12)"
                   >
                     <FileText size={18} />
                   </Flex>
@@ -234,7 +234,7 @@ const HeroSection = () => (
                 p="5" mb="5" border="1px solid" borderColor="#E2E8F0"
               >
                 <Flex align="center" gap="2" mb="3">
-                  <Sparkles size={13} color="#3182CE" />
+                  <Sparkles size={13} color="#1E293B" />
                   <Text fontSize="10px" fontWeight="800" color="#64748B" letterSpacing="0.15em">
                     AI SUMMARY
                   </Text>
@@ -298,8 +298,8 @@ const FeaturesSection = () => {
       icon: <Brain size={24} />,
       title: "AI Classification",
       description: "Automatically classifies documents by type, jurisdiction, and risk category using deep NLP models.",
-      gradient: "linear-gradient(135deg, #EBF8FF, #DBEAFE)",
-      iconColor: "#2B6CB0",
+      gradient: "linear-gradient(135deg, #F1F5F9, #E2E8F0)",
+      iconColor: "#0F172A",
       span: { base: 1, md: 1 },
     },
     {
@@ -333,7 +333,7 @@ const FeaturesSection = () => {
       {/* Subtle dots pattern */}
       <Box
         position="absolute" inset="0" opacity="0.015"
-        backgroundImage="radial-gradient(circle, #3182CE 1px, transparent 1px)"
+        backgroundImage="radial-gradient(circle, #1E293B 1px, transparent 1px)"
         backgroundSize="30px 30px"
       />
 
@@ -357,7 +357,7 @@ const FeaturesSection = () => {
           >
             Everything You Need to
             <br />
-            <Text as="span" bgGradient="to-r" gradientFrom="#2B6CB0" gradientTo="#319795" bgClip="text" color="transparent">
+            <Text as="span" bgGradient="to-r" gradientFrom="#0F172A" gradientTo="#334155" bgClip="text" color="transparent">
               Review Contracts
             </Text>
           </Text>
@@ -383,8 +383,8 @@ const FeaturesSection = () => {
               transition="all 0.4s cubic-bezier(0.4, 0, 0.2, 1)"
               _hover={{
                 transform: "translateY(-6px)",
-                shadow: "0 20px 40px rgba(0,0,0,0.06), 0 0 0 1px rgba(49,130,206,0.08)",
-                borderColor: "#BEE3F8",
+                shadow: "0 20px 40px rgba(0,0,0,0.06), 0 0 0 1px rgba(15,23,42,0.08)",
+                borderColor: "#E2E8F0",
               }}
               cursor="pointer"
               position="relative"
@@ -394,7 +394,7 @@ const FeaturesSection = () => {
               {/* Hover gradient */}
               <Box
                 position="absolute" inset="0" borderRadius="2xl"
-                bg="linear-gradient(135deg, rgba(49,130,206,0.02), rgba(56,178,172,0.02))"
+                bg="linear-gradient(135deg, rgba(15,23,42,0.02), rgba(56,178,172,0.02))"
                 opacity="0" transition="opacity 0.4s"
                 _groupHover={{ opacity: 1 }}
               />
@@ -416,7 +416,7 @@ const FeaturesSection = () => {
                   {feat.description}
                 </Text>
                 <Flex
-                  align="center" gap="1.5" mt="5" color="#3182CE"
+                  align="center" gap="1.5" mt="5" color="#1E293B"
                   fontWeight="600" fontSize="sm"
                   opacity="0" transform="translateX(-8px)"
                   transition="all 0.3s"
@@ -442,7 +442,7 @@ const CTASection = () => (
     <Box
       position="absolute" top="-200px" right="-100px"
       w="500px" h="500px" borderRadius="full"
-      bg="radial-gradient(circle, rgba(49,130,206,0.15) 0%, transparent 70%)"
+      bg="radial-gradient(circle, rgba(15,23,42,0.15) 0%, transparent 70%)"
     />
     <Box
       position="absolute" bottom="-150px" left="-80px"
@@ -459,9 +459,9 @@ const CTASection = () => (
       <Flex direction="column" align="center" textAlign="center" position="relative" zIndex="1">
         <Flex
           w="16" h="16" borderRadius="2xl" mb="8"
-          bg="linear-gradient(135deg, rgba(49,130,206,0.2), rgba(56,178,172,0.15))"
+          bg="linear-gradient(135deg, rgba(15,23,42,0.2), rgba(56,178,172,0.15))"
           border="1px solid rgba(255,255,255,0.08)"
-          align="center" justify="center" color="#63B3ED"
+          align="center" justify="center" color="#94A3B8"
           css={pulseGlow}
         >
           <Shield size={28} />
@@ -489,7 +489,7 @@ const CTASection = () => (
           fontWeight="800" fontSize="md"
           shadow="0 4px 20px rgba(255,255,255,0.15)"
           _hover={{
-            bg: "#F0F9FF", transform: "translateY(-3px) scale(1.02)",
+            bg: "#F8FAFC", transform: "translateY(-3px) scale(1.02)",
             shadow: "0 15px 40px rgba(255,255,255,0.2)",
           }}
           _active={{ transform: "translateY(-1px) scale(0.98)" }}
@@ -516,8 +516,8 @@ const Footer = () => (
           <Flex align="center" gap="3" mb="5">
             <Flex
               w="10" h="10" borderRadius="xl"
-              bg="linear-gradient(135deg, rgba(49,130,206,0.15), rgba(56,178,172,0.1))"
-              color="#63B3ED" align="center" justify="center"
+              bg="linear-gradient(135deg, rgba(15,23,42,0.15), rgba(56,178,172,0.1))"
+              color="#94A3B8" align="center" justify="center"
               border="1px solid rgba(255,255,255,0.06)"
             >
               <Shield size={18} />
