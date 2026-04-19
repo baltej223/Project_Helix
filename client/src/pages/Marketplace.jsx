@@ -1,315 +1,595 @@
-import React from "react";
+import React, { useState } from "react";
 import {
-  Search,
-  Filter,
-  Calendar,
+  Box,
+  Flex,
+  Text,
+  Button,
+  Grid,
+  SimpleGrid,
+  Badge,
+  Image,
+} from "@chakra-ui/react";
+import {
+  Phone,
+  ShieldCheck,
+  Clock,
   Star,
-  Verified,
-  ArrowRight,
-  MessageSquare,
+  ChevronLeft,
+  ChevronRight,
   Briefcase,
-  Sparkles,
-  MapPin,
-  ExternalLink,
+  Home,
+  Users,
+  Scale,
+  ShieldAlert,
+  FileText,
+  CheckCircle2,
 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import Button from "../components/ui/Button";
-import Card from "../components/ui/Card";
-import { Heading, Text } from "../components/ui/Typography";
-import Badge from "../components/ui/Badge";
+
+const categories = [
+  { name: "Divorce", icon: <Users size={16} /> },
+  { name: "Property", icon: <Home size={16} /> },
+  { name: "Employment", icon: <Briefcase size={16} /> },
+  { name: "Criminal", icon: <Scale size={16} /> },
+  { name: "Consumer", icon: <ShieldAlert size={16} /> },
+  { name: "Contracts", icon: <FileText size={16} /> },
+];
 
 const Marketplace = () => {
+  const [selectedDate, setSelectedDate] = useState(18);
+
+  // Simple calendar generation for mockup
+  const daysInMonth = 30;
+  const startDay = 3; // Wednesday
+  const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
+  const blanks = Array.from({ length: startDay }, (_, i) => i);
+
   return (
-    <div className="h-full min-h-0 bg-background grid-pattern p-8 lg:p-16 overflow-y-auto">
-      {/* Marketplace Header */}
-      <section className="max-w-7xl mx-auto mb-20 flex flex-col md:flex-row md:items-end justify-between gap-12">
-        <div className="max-w-3xl">
-          <Badge variant="primary" className="mb-6">
-            Global Expert Network
-          </Badge>
-          <Heading level={1} className="mb-6 leading-tight">
-            Legal Marketplace
-          </Heading>
-          <Text className="text-xl">
-            Connect with specialized legal consultants for verified analysis and
-            direct advisory sessions. Architecting trust through verified
-            expertise.
-          </Text>
-        </div>
-        <div className="flex gap-4">
-          <div className="px-8 py-5 bg-white border border-surface-container-high rounded-2xl flex items-center gap-4 shadow-xl shadow-primary/5">
-            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
-              <Verified size={24} />
-            </div>
-            <div>
-              <Text variant="label" className="mb-0.5">
-                Expert Status
-              </Text>
-              <div className="text-lg font-black text-on-surface tracking-tighter">
-                Verified Pros Only
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Filter Section */}
-      <section className="max-w-7xl mx-auto mb-16 flex flex-wrap items-center gap-8">
-        <div className="flex-1 min-w-[400px]">
-          <div className="relative group">
-            <Search
-              className="absolute left-6 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary transition-all group-focus-within:scale-110"
-              size={24}
-            />
-            <input
-              className="w-full pl-16 pr-8 py-6 bg-white border-2 border-surface-container-high rounded-[2rem] focus:ring-8 focus:ring-primary/5 focus:border-primary/40 outline-none text-on-surface transition-all placeholder:text-on-surface-variant/40 font-bold text-lg shadow-xl shadow-primary/5"
-              placeholder="Search by name, firm, or specialty..."
-              type="text"
-            />
-          </div>
-        </div>
-        <div className="flex items-center gap-4">
-          <FilterButton icon={<Filter size={20} />} label="Specialization" />
-          <FilterButton icon={<Calendar size={20} />} label="Availability" />
-          <Button variant="primary" className="px-10 py-6 rounded-[2rem]">
-            Apply Filters
-          </Button>
-        </div>
-      </section>
-
-      {/* Profile Card Grid */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-        <LawyerCard
-          name="Eleanor Vance, LL.M."
-          title="Corporate M&A & Intellectual Property"
-          rating="4.9"
-          reviews="124"
-          price="180"
-          status="online"
-          location="London, UK"
-          image="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=300&auto=format&fit=crop"
-        />
-        <LawyerCard
-          name="Marcus Kaine"
-          title="Digital Privacy & Data Compliance"
-          rating="4.7"
-          reviews="82"
-          price="120"
-          status="away"
-          location="New York, USA"
-          image="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=300&auto=format&fit=crop"
-        />
-        <LawyerCard
-          name="Samuel Whitlock"
-          title="Tax Litigation & Asset Protection"
-          rating="5.0"
-          reviews="215"
-          price="250"
-          status="online"
-          location="Singapore"
-          image="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=300&auto=format&fit=crop"
-        />
-      </div>
-
-      {/* Featured Specialist */}
-      <section className="max-w-7xl mx-auto mt-32">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-linear-to-br from-white to-surface-container-low/50 rounded-[3rem] p-16 lg:p-20 flex flex-col lg:flex-row gap-20 items-center border border-surface-container-high shadow-2xl shadow-primary/5 overflow-hidden relative"
+    <Box minH="100%" bg="#F8FAFC" overflow="auto">
+      {/* Hero Section */}
+      <Box
+        position="relative"
+        bg="#0F172A"
+        overflow="hidden"
+        px={{ base: "5", md: "10", lg: "16" }}
+        py={{ base: "12", lg: "20" }}
+      >
+        {/* Background Image & Overlay */}
+        <Box
+          position="absolute"
+          top="0"
+          right="0"
+          w={{ base: "100%", lg: "60%" }}
+          h="100%"
+          opacity="0.4"
         >
-          <div className="absolute right-0 top-0 w-1/2 h-full bg-linear-to-l from-primary/5 to-transparent pointer-events-none"></div>
+          <Image
+            src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="Courtroom interior"
+            w="100%"
+            h="100%"
+            objectFit="cover"
+            maskImage="linear-gradient(to right, transparent, black)"
+            WebkitMaskImage="linear-gradient(to right, transparent, black)"
+          />
+        </Box>
+        <Box
+          position="absolute"
+          top="0"
+          left="0"
+          w="100%"
+          h="100%"
+          bg="linear-gradient(90deg, #0F172A 40%, rgba(15,23,42,0.8) 70%, transparent 100%)"
+        />
 
-          <div className="lg:w-1/2 relative z-10">
-            <div className="inline-flex items-center gap-3 px-6 py-2 bg-primary/10 text-primary text-[10px] font-black uppercase tracking-[0.3em] rounded-full mb-10 border border-primary/20">
-              <Sparkles size={16} />
-              AI-Matched Expert
-            </div>
-            <Heading level={2} className="mb-10 leading-tight">
-              Recommended for your recent Analysis
-            </Heading>
-            <Text className="text-xl mb-12 font-medium leading-relaxed">
-              Based on your{" "}
-              <span className="text-primary font-black">
-                Master_Service_Agreement_v4.pdf
-              </span>
-              , Dr. Aris Thorne specializes in the cross-border regulatory
-              hurdles identified.
+        {/* Hero Content */}
+        <Box position="relative" zIndex="1" maxW="1400px" mx="auto">
+          <Badge
+            bg="rgba(255,255,255,0.1)"
+            color="#CBD5E0"
+            border="1px solid rgba(255,255,255,0.2)"
+            px="3"
+            py="1"
+            borderRadius="full"
+            fontSize="xs"
+            fontWeight="800"
+            letterSpacing="0.1em"
+            mb="6"
+          >
+            CONFIDENTIAL & SECURE
+          </Badge>
+
+          <Text
+            as="h1"
+            fontSize={{ base: "4xl", md: "5xl", lg: "6xl" }}
+            fontWeight="900"
+            color="white"
+            lineHeight="1.1"
+            letterSpacing="-0.03em"
+            mb="4"
+          >
+            Online Legal{" "}
+            <Text as="span" color="#F59E0B">
+              Consultation
             </Text>
-            <div className="flex items-center gap-10">
-              <Button size="lg" className="px-12">
-                Priority Sync
-              </Button>
-              <button className="text-[10px] font-black uppercase tracking-[0.3em] text-on-surface-variant hover:text-primary transition-all border-b-2 border-primary/20 hover:border-primary pb-2 flex items-center gap-2">
-                Deep Profile <ArrowRight size={14} />
-              </button>
-            </div>
-          </div>
+            <br />
+            Anytime Anywhere
+          </Text>
 
-          <div className="lg:w-1/2 w-full grid grid-cols-2 gap-8 relative z-10">
-            <MetricCard
-              icon={<Verified className="text-primary" />}
-              label="Tier 1 Expert"
-              value="98%"
-              sub="Relevance Match"
-            />
-            <MetricCard
-              icon={<Calendar className="text-primary" />}
-              label="Response"
-              value="< 2hrs"
-              sub="Turnaround"
-            />
-            <div className="bg-white/80 backdrop-blur-xl p-10 rounded-[2.5rem] shadow-xl shadow-primary/5 border border-surface-container-high col-span-2 flex items-center gap-8 group cursor-pointer hover:border-primary/20 transition-all">
-              <div className="relative">
-                <img
-                  src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=200&auto=format&fit=crop"
-                  alt="Dr. Aris Thorne"
-                  className="w-24 h-24 rounded-[2rem] object-cover border-4 border-primary/5 group-hover:scale-105 transition-transform"
-                />
-                <div className="absolute -right-2 -bottom-2 w-8 h-8 bg-primary rounded-xl flex items-center justify-center text-white border-4 border-white">
-                  <Verified size={14} />
-                </div>
-              </div>
-              <div>
-                <div className="text-2xl font-black text-on-surface mb-1">
-                  Dr. Aris Thorne
-                </div>
-                <div className="text-sm font-bold text-on-surface-variant flex items-center gap-2">
-                  Senior Counsel, Global Regulations
-                  <div className="w-1 h-1 rounded-full bg-surface-container-high"></div>
-                  <span className="text-primary">Stanford Law</span>
-                </div>
-              </div>
-              <ArrowRight
-                className="ml-auto text-primary/20 group-hover:text-primary group-hover:translate-x-2 transition-all"
-                size={24}
-              />
-            </div>
-          </div>
-        </motion.div>
-      </section>
-    </div>
+          <Text
+            fontSize={{ base: "lg", md: "xl" }}
+            color="#94A3B8"
+            maxW="540px"
+            lineHeight="1.6"
+            mb="10"
+          >
+            Connect instantly with top-tier legal experts. Enterprise-grade
+            consultations without the traditional law firm overhead.
+          </Text>
+
+          {/* Stats Pills */}
+          <Flex gap="4" mb="10" flexWrap="wrap">
+            <Flex
+              align="center"
+              gap="3"
+              bg="rgba(255,255,255,0.05)"
+              border="1px solid rgba(255,255,255,0.1)"
+              backdropFilter="blur(10px)"
+              px="4"
+              py="2"
+              borderRadius="full"
+            >
+              <Flex gap="-2">
+                {[
+                  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=100&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=100&auto=format&fit=crop",
+                ].map((img, i) => (
+                  <Image
+                    key={i}
+                    src={img}
+                    w="7"
+                    h="7"
+                    borderRadius="full"
+                    border="2px solid #0F172A"
+                    ml={i !== 0 ? "-3" : "0"}
+                  />
+                ))}
+              </Flex>
+              <Text fontSize="sm" color="white" fontWeight="600">
+                +197 Online Lawyers
+              </Text>
+              <Box w="2" h="2" borderRadius="full" bg="#22C55E" />
+            </Flex>
+
+            <Flex
+              align="center"
+              gap="3"
+              bg="rgba(255,255,255,0.05)"
+              border="1px solid rgba(255,255,255,0.1)"
+              backdropFilter="blur(10px)"
+              px="4"
+              py="2"
+              borderRadius="full"
+            >
+              <Flex
+                w="7"
+                h="7"
+                borderRadius="full"
+                bg="rgba(255,255,255,0.1)"
+                align="center"
+                justify="center"
+                color="white"
+              >
+                <Phone size={14} />
+              </Flex>
+              <Text fontSize="sm" color="white" fontWeight="600">
+                +26 Active Consultations
+              </Text>
+              <Box w="2" h="2" borderRadius="full" bg="#F59E0B" />
+            </Flex>
+          </Flex>
+
+          <Button
+            bg="linear-gradient(135deg, #0F172A, #1E293B)"
+            border="1px solid rgba(255,255,255,0.1)"
+            color="white"
+            size="lg"
+            h="14"
+            px="10"
+            borderRadius="xl"
+            fontWeight="800"
+            fontSize="md"
+            shadow="0 4px 20px rgba(15,23,42,0.4)"
+            _hover={{
+              transform: "translateY(-2px)",
+              shadow: "0 8px 30px rgba(15,23,42,0.5)",
+              bg: "linear-gradient(135deg, #1E293B, #334155)"
+            }}
+            transition="all 0.3s"
+          >
+            Consult Now
+          </Button>
+
+          {/* Trust Indicators */}
+          <Flex gap={{ base: "6", md: "10" }} mt="16" flexWrap="wrap">
+            <Box>
+              <Flex align="center" gap="2" mb="1">
+                <ShieldCheck size={18} color="white" />
+                <Text fontSize="md" fontWeight="800" color="white">
+                  Trusted
+                </Text>
+              </Flex>
+              <Flex align="center" gap="1">
+                <Text fontSize="sm" color="#94A3B8">
+                  4.8
+                </Text>
+                <Star size={12} fill="#F59E0B" color="#F59E0B" />
+              </Flex>
+            </Box>
+            <Box borderLeft="1px solid rgba(255,255,255,0.1)" pl={{ base: "6", md: "10" }}>
+              <Flex align="center" gap="2" mb="1">
+                <ShieldAlert size={18} color="white" />
+                <Text fontSize="md" fontWeight="800" color="white">
+                  Secured
+                </Text>
+              </Flex>
+              <Text fontSize="sm" color="#94A3B8">
+                256bit encryption
+              </Text>
+            </Box>
+            <Box borderLeft="1px solid rgba(255,255,255,0.1)" pl={{ base: "6", md: "10" }}>
+              <Flex align="center" gap="2" mb="1">
+                <Clock size={18} color="white" />
+                <Text fontSize="md" fontWeight="800" color="white">
+                  Convenient
+                </Text>
+              </Flex>
+              <Text fontSize="sm" color="#94A3B8">
+                Audio and Internet call 24x7
+              </Text>
+            </Box>
+          </Flex>
+
+          {/* Categories */}
+          <Flex align="center" gap="6" mt="12" borderTop="1px solid rgba(255,255,255,0.1)" pt="6" overflowX="auto" pb="2">
+            <Text fontSize="xs" fontWeight="800" color="white" letterSpacing="0.1em" flexShrink="0">
+              CONSULT ON:
+            </Text>
+            {categories.map((cat) => (
+              <Flex
+                key={cat.name}
+                align="center"
+                gap="2"
+                color="#CBD5E0"
+                cursor="pointer"
+                _hover={{ color: "white" }}
+                transition="color 0.2s"
+                flexShrink="0"
+              >
+                {cat.icon}
+                <Text fontSize="sm" fontWeight="600">
+                  {cat.name}
+                </Text>
+              </Flex>
+            ))}
+          </Flex>
+        </Box>
+      </Box>
+
+      {/* Booking Calendar Section */}
+      <Box maxW="1400px" mx="auto" p={{ base: "5", md: "10", lg: "16" }}>
+        <Grid templateColumns={{ base: "1fr", lg: "1fr 400px" }} gap="10">
+          <Box>
+            <Text fontSize="2xl" fontWeight="900" color="#0F1B2D" mb="2" letterSpacing="-0.02em">
+              Your Upcoming Consultations
+            </Text>
+            <Text fontSize="md" color="#64748B" mb="8">
+              Select a date to view your scheduled calls or book a new session with an available expert.
+            </Text>
+
+            {/* Calendar UI */}
+            <Box
+              bg="white"
+              borderRadius="3xl"
+              border="1px solid"
+              borderColor="#E2E8F0"
+              p="8"
+              shadow="0 4px 20px rgba(0,0,0,0.03)"
+            >
+              {/* Calendar Header */}
+              <Flex justify="space-between" align="center" mb="6">
+                <Text fontSize="xl" fontWeight="800" color="#0F1B2D">
+                  April 2026
+                </Text>
+                <Flex gap="2">
+                  <Flex
+                    w="10"
+                    h="10"
+                    borderRadius="xl"
+                    border="1px solid"
+                    borderColor="#E2E8F0"
+                    align="center"
+                    justify="center"
+                    cursor="pointer"
+                    _hover={{ bg: "#F8FAFC" }}
+                  >
+                    <ChevronLeft size={18} color="#64748B" />
+                  </Flex>
+                  <Flex
+                    w="10"
+                    h="10"
+                    borderRadius="xl"
+                    border="1px solid"
+                    borderColor="#E2E8F0"
+                    align="center"
+                    justify="center"
+                    cursor="pointer"
+                    _hover={{ bg: "#F8FAFC" }}
+                  >
+                    <ChevronRight size={18} color="#64748B" />
+                  </Flex>
+                </Flex>
+              </Flex>
+
+              {/* Days of Week */}
+              <Grid templateColumns="repeat(7, 1fr)" gap="2" mb="4">
+                {["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"].map((day) => (
+                  <Text key={day} textAlign="center" fontSize="xs" fontWeight="800" color="#94A3B8" letterSpacing="0.05em">
+                    {day}
+                  </Text>
+                ))}
+              </Grid>
+
+              {/* Dates */}
+              <Grid templateColumns="repeat(7, 1fr)" gap="2">
+                {blanks.map((b) => (
+                  <Box key={`blank-${b}`} h="12" />
+                ))}
+                {days.map((day) => {
+                  const isSelected = day === selectedDate;
+                  const hasBooking = day === 18 || day === 24;
+
+                  return (
+                    <Flex
+                      key={day}
+                      h="12"
+                      align="center"
+                      justify="center"
+                      borderRadius="xl"
+                      cursor="pointer"
+                      position="relative"
+                      bg={isSelected ? "linear-gradient(135deg, #0F172A, #1E293B)" : "transparent"}
+                      color={isSelected ? "white" : "#1E293B"}
+                      fontWeight={isSelected ? "800" : "600"}
+                      _hover={!isSelected ? { bg: "#F1F5F9" } : {}}
+                      onClick={() => setSelectedDate(day)}
+                      transition="all 0.2s"
+                    >
+                      {day}
+                      {hasBooking && !isSelected && (
+                        <Box
+                          position="absolute"
+                          bottom="2"
+                          w="1.5"
+                          h="1.5"
+                          borderRadius="full"
+                          bg="#0F1B2D"
+                        />
+                      )}
+                      {hasBooking && isSelected && (
+                        <Box
+                          position="absolute"
+                          bottom="2"
+                          w="1.5"
+                          h="1.5"
+                          borderRadius="full"
+                          bg="white"
+                        />
+                      )}
+                    </Flex>
+                  );
+                })}
+              </Grid>
+            </Box>
+          </Box>
+
+          {/* Booking Details / Active Schedule */}
+          <Box>
+            <Box
+              bg="white"
+              borderRadius="3xl"
+              border="1px solid"
+              borderColor="#E2E8F0"
+              p="6"
+              shadow="0 4px 20px rgba(0,0,0,0.03)"
+              h="100%"
+            >
+              <Text fontSize="sm" fontWeight="800" color="#94A3B8" letterSpacing="0.1em" mb="6">
+                SCHEDULE FOR APR {selectedDate}
+              </Text>
+
+              {selectedDate === 18 ? (
+                <Box>
+                  <Box
+                    bg="#F8FAFC"
+                    border="1px solid"
+                    borderColor="#E2E8F0"
+                    borderRadius="2xl"
+                    p="5"
+                    mb="4"
+                  >
+                    <Flex justify="space-between" align="flex-start" mb="4">
+                      <Box>
+                        <Badge
+                          bg="#F1F5F9"
+                          color="#334155"
+                          px="2"
+                          py="1"
+                          borderRadius="md"
+                          fontSize="9px"
+                          fontWeight="800"
+                          mb="2"
+                          border="1px solid"
+                          borderColor="#E2E8F0"
+                        >
+                          UPCOMING CALL
+                        </Badge>
+                        <Text fontSize="md" fontWeight="800" color="#0F1B2D">
+                          Corporate Restructuring
+                        </Text>
+                      </Box>
+                      <Box textAlign="right">
+                        <Text fontSize="lg" fontWeight="900" color="#0F1B2D">
+                          10:30 AM
+                        </Text>
+                        <Text fontSize="xs" color="#64748B" fontWeight="600">
+                          30 Min Duration
+                        </Text>
+                      </Box>
+                    </Flex>
+                    
+                    <Flex align="center" gap="3" pt="4" borderTop="1px solid" borderColor="#E2E8F0">
+                      <Image
+                        src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=100&auto=format&fit=crop"
+                        w="10"
+                        h="10"
+                        borderRadius="full"
+                        objectFit="cover"
+                      />
+                      <Box>
+                        <Text fontSize="sm" fontWeight="700" color="#0F1B2D">
+                          Dr. Aris Thorne
+                        </Text>
+                        <Text fontSize="xs" color="#64748B">
+                          Senior Legal Counsel
+                        </Text>
+                      </Box>
+                      <Flex
+                        ml="auto"
+                        w="8"
+                        h="8"
+                        borderRadius="full"
+                        bg="#E2E8F0"
+                        align="center"
+                        justify="center"
+                        color="#64748B"
+                        cursor="pointer"
+                        _hover={{ bg: "#CBD5E0" }}
+                      >
+                        <Phone size={14} />
+                      </Flex>
+                    </Flex>
+                  </Box>
+
+                  <Button
+                    w="100%"
+                    variant="outline"
+                    border="1px solid"
+                    borderColor="#E2E8F0"
+                    color="#0F1B2D"
+                    h="12"
+                    borderRadius="xl"
+                    fontWeight="700"
+                    _hover={{ bg: "#F8FAFC" }}
+                  >
+                    Book New Session
+                  </Button>
+                </Box>
+              ) : selectedDate === 24 ? (
+                <Box>
+                  <Box
+                    bg="#F8FAFC"
+                    border="1px solid"
+                    borderColor="#E2E8F0"
+                    borderRadius="2xl"
+                    p="5"
+                    mb="4"
+                  >
+                    <Flex justify="space-between" align="flex-start" mb="4">
+                      <Box>
+                        <Badge
+                          bg="#F1F5F9"
+                          color="#334155"
+                          px="2"
+                          py="1"
+                          borderRadius="md"
+                          fontSize="9px"
+                          fontWeight="800"
+                          mb="2"
+                          border="1px solid"
+                          borderColor="#E2E8F0"
+                        >
+                          SCHEDULED
+                        </Badge>
+                        <Text fontSize="md" fontWeight="800" color="#0F1B2D">
+                          IP Rights Review
+                        </Text>
+                      </Box>
+                      <Box textAlign="right">
+                        <Text fontSize="lg" fontWeight="900" color="#0F1B2D">
+                          2:00 PM
+                        </Text>
+                        <Text fontSize="xs" color="#64748B" fontWeight="600">
+                          45 Min Duration
+                        </Text>
+                      </Box>
+                    </Flex>
+                  </Box>
+                  <Button
+                    w="100%"
+                    variant="outline"
+                    border="1px solid"
+                    borderColor="#E2E8F0"
+                    color="#0F1B2D"
+                    h="12"
+                    borderRadius="xl"
+                    fontWeight="700"
+                    _hover={{ bg: "#F8FAFC" }}
+                  >
+                    Book New Session
+                  </Button>
+                </Box>
+              ) : (
+                <Box textAlign="center" py="10">
+                  <Flex
+                    w="16"
+                    h="16"
+                    borderRadius="2xl"
+                    bg="#F1F5F9"
+                    color="#94A3B8"
+                    align="center"
+                    justify="center"
+                    mx="auto"
+                    mb="4"
+                  >
+                    <CheckCircle2 size={24} />
+                  </Flex>
+                  <Text fontSize="md" fontWeight="700" color="#0F1B2D" mb="2">
+                    No Consultations Scheduled
+                  </Text>
+                  <Text fontSize="sm" color="#64748B" mb="6">
+                    You have no active bookings for this date.
+                  </Text>
+                  <Button
+                    bg="linear-gradient(135deg, #0F172A, #1E293B)"
+                    color="white"
+                    h="12"
+                    px="6"
+                    borderRadius="xl"
+                    fontWeight="700"
+                    shadow="0 4px 12px rgba(15,23,42,0.3)"
+                    _hover={{ transform: "translateY(-1px)", shadow: "0 6px 16px rgba(15,23,42,0.4)" }}
+                  >
+                    Book a Consultation
+                  </Button>
+                </Box>
+              )}
+            </Box>
+          </Box>
+        </Grid>
+      </Box>
+    </Box>
   );
 };
-
-const FilterButton = ({ icon, label }) => (
-  <button className="flex items-center gap-4 px-8 py-5 bg-white hover:bg-surface-container-low rounded-[1.5rem] transition-all border-2 border-surface-container-high hover:border-primary/20 shadow-sm group">
-    <span className="text-on-surface-variant group-hover:text-primary transition-colors">
-      {icon}
-    </span>
-    <span className="text-sm font-black text-on-surface uppercase tracking-widest">
-      {label}
-    </span>
-  </button>
-);
-
-const LawyerCard = ({
-  name,
-  title,
-  rating,
-  reviews,
-  price,
-  status,
-  image,
-  location,
-}) => (
-  <motion.div
-    whileHover={{ y: -12 }}
-    className="group relative bg-white rounded-[3rem] overflow-hidden flex flex-col shadow-2xl shadow-primary/5 border border-surface-container-high transition-all duration-500"
-  >
-    <div className="h-3 bg-linear-to-r from-primary to-primary-dim opacity-80 group-hover:opacity-100 transition-opacity"></div>
-    <div className="p-12 flex flex-col h-full">
-      <div className="flex items-start justify-between mb-10">
-        <div className="relative">
-          <div className="absolute -inset-4 bg-primary/5 rounded-[2.5rem] blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-          <img
-            src={image}
-            alt={name}
-            className="w-28 h-28 rounded-[2rem] object-cover ring-8 ring-surface-container-low transition-all group-hover:ring-primary/10 relative z-10"
-          />
-          <div
-            className={`absolute -right-1 -bottom-1 w-6 h-6 border-4 border-white rounded-full relative z-20 ${status === "online" ? "bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" : "bg-amber-400"}`}
-          ></div>
-        </div>
-        <div className="text-right">
-          <div className="flex items-center justify-end gap-2 text-primary">
-            <Star size={20} fill="currentColor" />
-            <span className="font-black text-2xl tracking-tighter">
-              {rating}
-            </span>
-          </div>
-          <div className="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant font-black mt-2">
-            {reviews} Reviews
-          </div>
-        </div>
-      </div>
-
-      <Heading
-        level={3}
-        className="mb-2 leading-tight group-hover:text-primary transition-colors"
-      >
-        {name}
-      </Heading>
-      <Text variant="detail" className="font-bold mb-4 opacity-80">
-        {title}
-      </Text>
-      <div className="flex items-center gap-2 mb-10 text-on-surface-variant opacity-60">
-        <MapPin size={14} />
-        <span className="text-[10px] font-black uppercase tracking-widest">
-          {location}
-        </span>
-      </div>
-
-      <div className="mt-auto pt-10 border-t border-surface-container-high flex items-center justify-between">
-        <div>
-          <Text variant="label" className="mb-1 opacity-50">
-            Consultation
-          </Text>
-          <div className="flex items-baseline gap-1.5">
-            <span className="text-3xl font-black text-on-surface tracking-tighter">
-              ${price}
-            </span>
-            <span className="text-[10px] font-black text-on-surface-variant uppercase tracking-[0.2em]">
-              / session
-            </span>
-          </div>
-        </div>
-        <button className="w-16 h-16 bg-surface-container-low text-primary rounded-[1.5rem] hover:bg-primary hover:text-white hover:shadow-2xl hover:shadow-primary/40 transition-all active:scale-95 flex items-center justify-center group/btn border border-surface-container-high/50">
-          <ArrowRight
-            size={24}
-            className="transition-transform group-hover/btn:translate-x-1"
-          />
-        </button>
-      </div>
-    </div>
-  </motion.div>
-);
-
-const MetricCard = ({ icon, label, value, sub }) => (
-  <Card
-    padding="p-8"
-    className="shadow-xl shadow-primary/5 flex flex-col gap-6 group hover:border-primary/20 transition-all"
-  >
-    <div className="flex items-center gap-4">
-      <div className="p-3 bg-primary/5 rounded-2xl text-primary transition-colors group-hover:bg-primary group-hover:text-white">
-        {icon}
-      </div>
-      <Text
-        variant="label"
-        className="group-hover:text-primary transition-colors"
-      >
-        {label}
-      </Text>
-    </div>
-    <div>
-      <div className="text-4xl font-black text-on-surface tracking-tighter mb-1">
-        {value}
-      </div>
-      <Text variant="detail" className="opacity-60">
-        {sub}
-      </Text>
-    </div>
-  </Card>
-);
 
 export default Marketplace;
