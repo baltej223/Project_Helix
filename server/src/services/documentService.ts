@@ -1,15 +1,8 @@
 import Document from '../models/Document.js';
 import { DocumentUploadMetadata, DocumentStatus } from '../schemas/documentSchemas.js';
 
-export interface CreateDocumentInput {
-  ownerId: string;
-  originalFileName: string;
-  mimeType: string;
-  fileSizeBytes: number;
-  pageCount: number | null;
-  extractedTextLength?: number;
-  source?: string;
-}
+// In-memory PDF storage
+const pdfBuffer = new Map<string, Buffer>();
 
 export async function createDocument(input: CreateDocumentInput) {
   const document = new Document({
@@ -25,6 +18,32 @@ export async function createDocument(input: CreateDocumentInput) {
   const saved = await document.save();
   console.log(`✓ Document created: ${saved._id}`);
   return saved;
+}
+
+/**
+ * Store PDF in memory
+ */
+export function setDocumentPdf(documentId: string, pdfData: Buffer) {
+  pdfBuffer.set(documentId, pdfData);
+  console.log(`📄 PDF stored in memory for ${documentId}: ${pdfData.length} bytes`);
+}
+
+/**
+ * Get PDF from memory
+ */
+export function getDocumentPdf(documentId: string): Buffer | undefined {
+  return pdfBuffer.get(documentId);
+}
+
+/**
+ * Delete PDF from memory
+ */
+export function deleteDocumentPdf(documentId: string) {
+  const deleted = pdfBuffer.delete(documentId);
+  if (deleted) {
+    console.log(`🗑️ PDF removed from memory for ${documentId}`);
+  }
+  return deleted;
 }
 
 export async function updateDocumentStatus(documentId: string, status: DocumentStatus, errorMessage?: string) {

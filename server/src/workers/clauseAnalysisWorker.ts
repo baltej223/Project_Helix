@@ -1,6 +1,6 @@
 import Queue from 'bull';
 import { getRedisClient } from '../clients/redisClient.js';
-import { getDocumentById } from '../services/documentService.js';
+import { getDocumentById, deleteDocumentPdf } from '../services/documentService.js';
 import { getPiiRemovalLog } from '../services/piiRemovalService.js';
 import { segmentClauses } from '../services/clauseSegmentationService.js';
 import { analyzeClauseWithGemini, analyzeClauseLocal } from '../services/clauseAnalysisLlmService.js';
@@ -69,7 +69,7 @@ export async function registerJobProcessor() {
               i
             );
           } else {
-            analysisResult = analyzeClauseLocal(clause.text, i);
+            analysisResult = analyzeClauseLocal(clause.text, domain || document.classification?.domain || 'general', i);
           }
 
           // Save to MongoDB
@@ -111,6 +111,9 @@ export async function registerJobProcessor() {
 
       // Mark job as completed
       await updateJobStatus(jobId, 'completed');
+
+      // Clean up PDF from memory after job completes
+      deleteDocumentPdf(documentId);
 
       console.log(`\n✓ Job ${jobId} completed successfully`);
       console.log(`  Analyzed ${clauseIds.length} clauses`);

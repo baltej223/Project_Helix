@@ -230,3 +230,14 @@ export async function getProcessingJobById(jobId: string) {
 export async function getJobsByDocumentId(documentId: string) {
   return ProcessingJob.find({ documentId }).sort({ createdAt: -1 });
 }
+
+/**
+ * Get ProcessingJob by document ID (returns most recent)
+ */
+export async function getProcessingJobByDocumentId(documentId: string, ownerId: string) {
+  const job = await ProcessingJob.findOne({ documentId, ownerId }).sort({ createdAt: -1 });
+  if (!job) {
+    throw new Error(`ProcessingJob not found for document: ${documentId}`);
+  }
+  return job;
+}
