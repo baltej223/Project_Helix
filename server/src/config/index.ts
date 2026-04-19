@@ -11,6 +11,11 @@ interface Config {
   ocrRequestTimeoutMs: number;
   isProduction: boolean;
   isDevelopment: boolean;
+  mongodbUri: string;
+  redisUrl: string;
+  geminiApiKey: string;
+  llmModel: string;
+  llmBaseUrl: string;
 }
 
 const config: Config = {
@@ -25,6 +30,11 @@ const config: Config = {
   ocrRequestTimeoutMs: parseInt(process.env.OCR_REQUEST_TIMEOUT_MS || '30000', 10),
   isProduction: process.env.NODE_ENV === 'production',
   isDevelopment: process.env.NODE_ENV === 'development',
+  mongodbUri: process.env.MONGODB_URI || 'mongodb://localhost:27017/project-helix',
+  redisUrl: process.env.REDIS_URL || 'redis://localhost:6379',
+  geminiApiKey: process.env.GEMINI_API_KEY || '',
+  llmModel: process.env.LLM_MODEL || 'gemini-2.5-flash',
+  llmBaseUrl: process.env.LLM_BASE_URL || 'https://generativelanguage.googleapis.com/v1beta/openai/',
 };
 
 export default config;
